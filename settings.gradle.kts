@@ -20,5 +20,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "GithubUserClient"
-include(":app")
- 
+include(":app-android")
+include(":shared-domain")
+include(":shared-core")
+include(":shared-data")
+include(":shared-presentation")
