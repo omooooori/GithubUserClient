@@ -1,0 +1,41 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug] <Short description>"
+labels: [bug]
+assignees: []
+
+body:
+  - type: textarea
+    id: overview
+    attributes:
+      label: Overview (Required)
+      description: Describe what the bug is and what you expected instead.
+      placeholder: App crashes when entering a special character in the search bar...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide steps to reproduce the issue.
+      placeholder: |
+        1. Launch the app
+        2. Navigate to UserListScreen
+        3. Type `***` in search bar
+        4. Observe the crash
+    validations:
+      required: false
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Related PRs, issues, crash logs, etc.
+      placeholder: Logcat trace or GitHub link
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Any additional context, environment info, or observations

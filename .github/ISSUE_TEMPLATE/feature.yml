@@ -1,0 +1,40 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+title: "[Feature] <Short description>"
+labels: [enhancement]
+assignees: []
+
+body:
+  - type: textarea
+    id: overview
+    attributes:
+      label: Overview (Required)
+      description: What is this issue about? Describe the background and goal clearly.
+      placeholder: Add a loading indicator while fetching user data...
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: Break down the feature into actionable items (checklist style).
+      placeholder: |
+        - [ ] Add loading indicator to UserListScreen
+        - [ ] Connect state to ViewModel
+        - [ ] Add test case
+    validations:
+      required: false
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Related PRs, Design specs, or external docs
+      placeholder: e.g., https://figma.com/...
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional notes or constraints
