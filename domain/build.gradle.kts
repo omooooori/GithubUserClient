@@ -59,20 +59,24 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
         html.required.set(true)
     }
 
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-    )
+    val fileFilter =
+        listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+        )
 
-    val debugTree = fileTree("${project.buildDir}/tmp/kotlin-classes/debug") {
-        exclude(fileFilter)
-    }
+    val debugTree =
+        fileTree("${project.buildDir}/tmp/kotlin-classes/debug") {
+            exclude(fileFilter)
+        }
 
     sourceDirectories.setFrom(files("${project.projectDir}/src/main/java"))
     classDirectories.setFrom(files(debugTree))
-    executionData.setFrom(fileTree(project.buildDir) {
-        include("/jacoco/testDebugUnitTest.exec")
-    })
+    executionData.setFrom(
+        fileTree(project.buildDir) {
+            include("/jacoco/testDebugUnitTest.exec")
+        },
+    )
 }
