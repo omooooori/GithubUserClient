@@ -29,13 +29,14 @@ coroutines = "1.10.2"
 # Koin
 koin = "4.0.4"
 
-# Decompose
-decompose = "3.3.0"
+# Coil
+coil = "2.7.0"
+
 kotlinStdlib = "2.1.20"
 kotlinTest = "2.1.20"
 runner = "1.6.2"
 core = "1.6.1"
-appcompat = "1.6.1"
+appcompat = "1.7.0"
 material = "1.12.0"
 
 [libraries]
@@ -45,7 +46,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
-## --- Compose ---
+## --- Compose and for UI ---
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
@@ -55,11 +56,13 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 ## --- Ktor (Multiplatform HTTP Client) ---
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 ## --- Serialization ---
@@ -98,6 +101,7 @@ compose = [
     "androidx-ui",
     "androidx-ui-graphics",
     "androidx-ui-text-google-fonts",
+    "androidx-ui-tooling",
     "androidx-ui-tooling-preview",
     "androidx-material3",
     "androidx-navigation-compose"
@@ -106,4 +110,12 @@ compose = [
 compose-test = [
     "androidx-ui-test-junit4",
     "androidx-ui-test-manifest"
+]
+
+ktor = [
+    "ktor-client-cio",
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-logging",
+    "ktor-serialization-kotlinx-json"
 ]
