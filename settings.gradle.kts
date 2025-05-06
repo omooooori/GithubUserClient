@@ -1,12 +1,6 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
@@ -21,10 +15,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "GithubUserClient"
 include(":app")
+include(":api")
 include(":data")
-include(":design")
+include(":model")
 include(":domain")
+include(":design")
 include(":feature-userlist")
 include(":feature-userdetail")
-include(":model")
-include(":api")

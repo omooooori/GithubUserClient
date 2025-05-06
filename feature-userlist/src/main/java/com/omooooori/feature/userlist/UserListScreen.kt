@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omooooori.design.component.material3.AppScaffold
@@ -42,19 +43,26 @@ fun UserListScreen(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
+                    .padding(paddingValues)
+                    .testTag("user_list_container"),
         ) {
             when (uiState) {
                 is UserListUiState.Loading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier =
+                            Modifier
+                                .align(Alignment.Center)
+                                .testTag("loading_indicator"),
                     )
                 }
 
                 is UserListUiState.Error -> {
                     AppText(
                         text = uiState.message,
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier =
+                            Modifier
+                                .align(Alignment.Center)
+                                .testTag("error_message"),
                     )
                 }
 
@@ -64,6 +72,7 @@ fun UserListScreen(
                             query = query,
                             onQueryChange = { query = it },
                             placeholder = "Search GitHub users...",
+                            modifier = Modifier.testTag("search_bar"),
                         )
 
                         val filtered =
@@ -73,13 +82,17 @@ fun UserListScreen(
 
                         LazyColumn(
                             contentPadding = PaddingValues(vertical = 4.dp),
-                            modifier = Modifier.fillMaxSize(),
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .testTag("user_list"),
                         ) {
                             items(filtered, key = { it.id }) { user ->
                                 SearchListCell(
                                     username = user.username,
                                     avatarUrl = user.avatarUrl,
                                     onClick = { onUserClick(user.username, user.avatarUrl) },
+                                    modifier = Modifier.testTag("user_item_${user.id}"),
                                 )
                             }
                         }

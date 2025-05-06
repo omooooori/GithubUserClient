@@ -1,0 +1,142 @@
+name: Android Test and Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Run Unit Tests
+      run: ./gradlew test
+
+    - name: Upload Unit Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: unit-test-results
+        path: |
+          **/build/reports/tests/
+          **/build/test-results/
+
+  # E2Eテストは一時的にコメントアウト
+  # e2e-test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v4
+
+  #   - name: Set up JDK 17
+  #     uses: actions/setup-java@v4
+  #     with:
+  #       java-version: '17'
+  #       distribution: 'temurin'
+  #       cache: gradle
+
+  #   - name: Grant execute permission for gradlew
+  #     run: chmod +x gradlew
+
+  #   - name: Run Android Tests
+  #     uses: reactivecircus/android-emulator-runner@v2
+  #     with:
+  #       api-level: 34
+  #       target: google_apis
+  #       arch: x86_64
+  #       profile: Pixel_6
+  #       script: ./gradlew connectedDebugAndroidTest
+
+  #   - name: Upload E2E Test Results
+  #     if: always()
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: e2e-test-results
+  #       path: |
+  #         **/build/reports/androidTests/
+  #         **/build/outputs/androidTest-results/
+
+  ktlint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Run Ktlint Check
+      run: ./gradlew ktlintCheck
+
+    - name: Run Ktlint Format
+      run: ./gradlew ktlintFormat
+
+    - name: Upload Ktlint Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ktlint-results
+        path: |
+          **/build/reports/ktlint/
+          **/build/ktlint/
+
+  report:
+    needs: [unit-test, ktlint]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download Unit Test Results
+      uses: actions/download-artifact@v4
+      with:
+        name: unit-test-results
+        path: unit-test-results
+
+    # - name: Download E2E Test Results
+    #   uses: actions/download-artifact@v4
+    #   with:
+    #     name: e2e-test-results
+    #     path: e2e-test-results
+
+    - name: Download Ktlint Results
+      uses: actions/download-artifact@v4
+      with:
+        name: ktlint-results
+        path: ktlint-results
+
+    - name: Generate Test Report
+      run: |
+        echo "=== Unit Test Results ==="
+        find unit-test-results -name "*.xml" -exec cat {} \;
+        # echo "=== E2E Test Results ==="
+        # find e2e-test-results -name "*.xml" -exec cat {} \;
+        echo "=== Ktlint Results ==="
+        find ktlint-results -name "*.xml" -exec cat {} \;
+
+    - name: Upload Combined Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: combined-report
+        path: |
+          unit-test-results/
+          # e2e-test-results/
+          ktlint-results/

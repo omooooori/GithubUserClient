@@ -7,6 +7,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -18,7 +19,7 @@ fun AppTopBar(
 ) {
     TopAppBar(
         title = { AppText(text = title, style = MaterialTheme.typography.titleLarge) },
-        modifier = modifier,
+        modifier = modifier.testTag("back_button"),
         navigationIcon = navigationIcon ?: {},
         actions = actions,
         colors =
