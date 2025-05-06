@@ -1,4 +1,4 @@
-package com.omooooori.core.theme
+package com.omooooori.design.theme
 
 import androidx.compose.ui.graphics.Color
 

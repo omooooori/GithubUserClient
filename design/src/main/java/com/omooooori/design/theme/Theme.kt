@@ -1,4 +1,4 @@
-package com.omooooori.core.theme
+package com.omooooori.design.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

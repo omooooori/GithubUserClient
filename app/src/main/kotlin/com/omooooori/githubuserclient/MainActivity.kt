@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.omooooori.core.theme.GithubUserClientTheme
+import com.omooooori.design.theme.GithubUserClientTheme
 import com.omooooori.githubuserclient.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {

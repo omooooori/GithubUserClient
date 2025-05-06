@@ -1,4 +1,4 @@
-package com.omooooori.core
+package com.omooooori.design
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.omooooori.core
+package com.omooooori.design
 
 import org.junit.Test
 
