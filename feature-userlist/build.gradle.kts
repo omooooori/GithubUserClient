@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.core)
 
+    testImplementation(libs.bundles.test)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
