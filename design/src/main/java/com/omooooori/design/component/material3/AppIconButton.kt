@@ -18,13 +18,13 @@ fun AppIconButton(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     contentDescription: String?,
-    tint: Color = MaterialTheme.colorScheme.onSurface
+    tint: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             imageVector = icon,
             contentDescription = contentDescription,
-            tint = tint
+            tint = tint,
         )
     }
 }
@@ -32,7 +32,7 @@ fun AppIconButton(
 @Preview(
     name = "Light Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppIconButtonLightPreview() {
@@ -40,7 +40,7 @@ fun AppIconButtonLightPreview() {
         AppIconButton(
             icon = Icons.Default.AccountCircle,
             contentDescription = "",
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -48,7 +48,7 @@ fun AppIconButtonLightPreview() {
 @Preview(
     name = "Dark Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppIconButtonDarkPreview() {
@@ -56,7 +56,7 @@ fun AppIconButtonDarkPreview() {
         AppIconButton(
             icon = Icons.Default.AccountCircle,
             contentDescription = "",
-            onClick = {}
+            onClick = {},
         )
     }
 }

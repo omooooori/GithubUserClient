@@ -1,4 +1,4 @@
-package com.omooooori.feature_userlist
+package com.omooooori.feature.userlist
 
 import com.omooooori.model.GithubUser
 
@@ -7,7 +7,7 @@ sealed interface UserListUiState {
 
     data class Success(
         val query: String,
-        val users: List<GithubUser>
+        val users: List<GithubUser>,
     ) : UserListUiState
 
     data class Error(val message: String) : UserListUiState

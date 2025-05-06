@@ -19,7 +19,7 @@ fun AppText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     maxLines: Int = Int.MAX_VALUE,
-    overflow: TextOverflow = TextOverflow.Clip
+    overflow: TextOverflow = TextOverflow.Clip,
 ) {
     Text(
         text = text,
@@ -28,20 +28,20 @@ fun AppText(
         color = color,
         textAlign = textAlign,
         maxLines = maxLines,
-        overflow = overflow
+        overflow = overflow,
     )
 }
 
 @Preview(
     name = "Light Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppTextLightPreview() {
     GithubUserClientTheme(darkTheme = false) {
         AppText(
-            text = "All developer should use this ui component\nfor all text ui in this application."
+            text = "All developer should use this ui component\nfor all text ui in this application.",
         )
     }
 }
@@ -49,13 +49,13 @@ fun AppTextLightPreview() {
 @Preview(
     name = "Dark Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppTextDarkPreview() {
     GithubUserClientTheme(darkTheme = true) {
         AppText(
-            text = "All developer should use this ui component\nfor all text ui in this application."
+            text = "All developer should use this ui component\nfor all text ui in this application.",
         )
     }
 }

@@ -11,7 +11,7 @@ fun GithubUserResult.toModel(): GithubUser {
     return GithubUser(
         id = id,
         username = login,
-        avatarUrl = avatarUrl
+        avatarUrl = avatarUrl,
     )
 }
 
@@ -24,7 +24,7 @@ fun GithubUserDetailResult.toModel(): GithubUserDetail {
         location = location,
         publicRepos = publicRepos,
         followers = followers,
-        following = following
+        following = following,
     )
 }
 
@@ -32,6 +32,6 @@ fun GithubUserEventResult.toModel(): GithubUserEvent {
     return GithubUserEvent(
         id = id,
         type = type,
-        repoName = repo.name
+        repoName = repo.name,
     )
 }

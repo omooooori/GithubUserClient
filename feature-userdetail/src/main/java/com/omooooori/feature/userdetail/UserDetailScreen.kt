@@ -1,4 +1,4 @@
-package com.omooooori.feature_userdetail
+package com.omooooori.feature.userdetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,24 +27,23 @@ import com.omooooori.model.GithubUserDetail
 import com.omooooori.model.GithubUserEvent
 
 @Composable
-fun UserDetailScreen(
-    uiState: UserDetailUiState,
-) {
+fun UserDetailScreen(uiState: UserDetailUiState) {
     AppScaffold(
         topBar = {
             AppTopBar(title = "GitHub User Detail")
-        }
+        },
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             when (val state = uiState) {
                 is UserDetailUiState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator()
                     }
@@ -54,18 +53,18 @@ fun UserDetailScreen(
                     UserDetailContent(
                         avatarUrl = state.avatarUrl,
                         user = state.userDetail,
-                        events = state.events
+                        events = state.events,
                     )
                 }
 
                 is UserDetailUiState.Error -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         AppText(
                             "エラー: ${state.message}",
-                            color = MaterialTheme.colorScheme.error
+                            color = MaterialTheme.colorScheme.error,
                         )
                     }
                 }
@@ -78,21 +77,23 @@ fun UserDetailScreen(
 fun UserDetailContent(
     avatarUrl: String,
     user: GithubUserDetail,
-    events: List<GithubUserEvent>
+    events: List<GithubUserEvent>,
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AppAsyncImage(
                     model = avatarUrl,
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(CircleShape)
+                    modifier =
+                        Modifier
+                            .size(64.dp)
+                            .clip(CircleShape),
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 AppText(text = user.username, style = MaterialTheme.typography.titleLarge)
@@ -113,4 +114,3 @@ fun UserDetailContent(
         }
     }
 }
-

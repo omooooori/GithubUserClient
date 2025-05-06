@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.omooooori.feature_userlist"
+    namespace = "com.omooooori.feature.userlist"
     compileSdk = 36
 
     defaultConfig {

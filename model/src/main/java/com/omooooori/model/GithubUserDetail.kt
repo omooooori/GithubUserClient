@@ -8,5 +8,5 @@ data class GithubUserDetail(
     val location: String?,
     val publicRepos: Int,
     val followers: Int,
-    val following: Int
+    val following: Int,
 )

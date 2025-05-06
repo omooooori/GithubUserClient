@@ -12,48 +12,50 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-object KtorHttpClient {
-    fun httpClient() = HttpClient {
-        expectSuccess = false
-        install(HttpTimeout) {
-            val timeout = 60000L
-            connectTimeoutMillis = timeout
-            requestTimeoutMillis = timeout
-            socketTimeoutMillis = timeout
-        }
-
-        install(ResponseObserver) {
-            onResponse { response ->
-                println("AppDebug HTTP ResponseObserver status: ${response.status.value}")
+object KtorApiClient {
+    fun httpClient() =
+        HttpClient {
+            expectSuccess = false
+            install(HttpTimeout) {
+                val timeout = 60000L
+                connectTimeoutMillis = timeout
+                requestTimeoutMillis = timeout
+                socketTimeoutMillis = timeout
             }
-        }
-        HttpResponseValidator {
-            validateResponse { response: HttpResponse ->
-                val statusCode = response.status.value
-            }
-        }
 
-        install(Logging) {
-            //  logger = Logger.DEFAULT
-            level = LogLevel.ALL
-
-            logger = object : Logger {
-                override fun log(message: String) {
-                    println("AppDebug KtorHttpClient message:$message")
+            install(ResponseObserver) {
+                onResponse { response ->
+                    println("AppDebug HTTP ResponseObserver status: ${response.status.value}")
                 }
             }
-        }
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    explicitNulls = false
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                    prettyPrint = true
-                    encodeDefaults = true
-                    classDiscriminator = "#class"
+            HttpResponseValidator {
+                validateResponse { response: HttpResponse ->
+                    val statusCode = response.status.value
                 }
-            )
+            }
+
+            install(Logging) {
+                //  logger = Logger.DEFAULT
+                level = LogLevel.ALL
+
+                logger =
+                    object : Logger {
+                        override fun log(message: String) {
+                            println("AppDebug KtorHttpClient message:$message")
+                        }
+                    }
+            }
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        explicitNulls = false
+                        ignoreUnknownKeys = true
+                        isLenient = true
+                        prettyPrint = true
+                        encodeDefaults = true
+                        classDiscriminator = "#class"
+                    },
+                )
+            }
         }
-    }
 }

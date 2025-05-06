@@ -1,4 +1,4 @@
-package com.omooooori.feature_userlist
+package com.omooooori.feature.userlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class UserListViewModel(
-    private val fetchUsersUseCase: FetchUsersUseCase
+    private val fetchUsersUseCase: FetchUsersUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<UserListUiState>(UserListUiState.Loading)
     val uiState: StateFlow<UserListUiState> = _uiState
 

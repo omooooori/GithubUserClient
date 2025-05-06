@@ -2,9 +2,7 @@ package com.omooooori.design.theme
 
 import androidx.compose.ui.graphics.Color
 
-/**
- * Generated from https://material-foundation.github.io/material-theme-builder/
- */
+// Generated from https://material-foundation.github.io/material-theme-builder/
 
 /**
  * For Light mode
@@ -44,7 +42,6 @@ val surfaceContainerLowLight = Color(0xFFFAF3E5)
 val surfaceContainerLight = Color(0xFFF4EDDF)
 val surfaceContainerHighLight = Color(0xFFEEE8DA)
 val surfaceContainerHighestLight = Color(0xFFE8E2D4)
-
 
 /**
  * For Dark mode

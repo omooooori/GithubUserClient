@@ -21,27 +21,28 @@ fun SearchInputBar(
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "Search username...",
-    onClearClick: () -> Unit = { onQueryChange("") }
+    onClearClick: () -> Unit = { onQueryChange("") },
 ) {
     AppTextField(
         value = query,
         onValueChange = onQueryChange,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         placeholder = placeholder,
         singleLine = true,
         trailingIcon = Icons.Default.Close,
         onClickTrailingIcon = {
             onClearClick()
-        }
+        },
     )
 }
 
 @Preview(
     name = "Light Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun SearchInputBarLightPreview() {
@@ -49,7 +50,7 @@ fun SearchInputBarLightPreview() {
     GithubUserClientTheme {
         SearchInputBar(
             query = text,
-            onQueryChange = { text = it }
+            onQueryChange = { text = it },
         )
     }
 }
@@ -57,7 +58,7 @@ fun SearchInputBarLightPreview() {
 @Preview(
     name = "Dark Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun SearchInputBarDarkPreview() {
@@ -65,7 +66,7 @@ fun SearchInputBarDarkPreview() {
     GithubUserClientTheme(darkTheme = true) {
         SearchInputBar(
             query = text,
-            onQueryChange = { text = it }
+            onQueryChange = { text = it },
         )
     }
 }

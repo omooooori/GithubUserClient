@@ -10,41 +10,39 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.omooooori.feature_userdetail.UserDetailScreen
-import com.omooooori.feature_userdetail.UserDetailViewModel
-import com.omooooori.feature_userlist.UserListScreen
-import com.omooooori.feature_userlist.UserListViewModel
+import com.omooooori.feature.userdetail.UserDetailScreen
+import com.omooooori.feature.userdetail.UserDetailViewModel
+import com.omooooori.feature.userlist.UserListScreen
+import com.omooooori.feature.userlist.UserListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AppNavigation(
-    navController: NavHostController = rememberNavController()
-) {
+fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
-        startDestination = Screen.UserList.route,
+        startDestination = Route.UserList.route,
         enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
         exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
         popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
     ) {
-        composable(Screen.UserList.route) {
+        composable(Route.UserList.route) {
             val userListViewModel: UserListViewModel = koinViewModel()
             val state by userListViewModel.uiState.collectAsState()
             UserListScreen(
                 uiState = state,
                 onUserClick = { userId, avatarUrl ->
                     navController.navigate(
-                        Screen.UserDetail.createRoute(
+                        Route.UserDetail.createRoute(
                             userId,
-                            avatarUrl
-                        )
+                            avatarUrl,
+                        ),
                     )
-                }
+                },
             )
         }
 
-        composable(Screen.UserDetail.route) { backStackEntry ->
+        composable(Route.UserDetail.route) { backStackEntry ->
             val username = backStackEntry.arguments?.getString("username") ?: return@composable
             val avatarUrl = backStackEntry.arguments?.getString("avatarUrl") ?: return@composable
             val userDetailViewModel: UserDetailViewModel = koinViewModel()
