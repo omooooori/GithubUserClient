@@ -4,6 +4,7 @@ kotlin = "2.1.20"
 kotest = "5.9.1"
 mockk = "1.14.2"
 coroutines-test = "1.10.2"
+orgJacocoCore = "0.8.13"
 turbine = "1.2.0"
 
 # AndroidX
@@ -97,6 +98,7 @@ kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", ver
 kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+org-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "orgJacocoCore" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 [plugins]
