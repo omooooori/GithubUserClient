@@ -1,6 +1,10 @@
 [versions]
 agp = "8.11.0-alpha08"
 kotlin = "2.1.20"
+kotest = "5.9.1"
+mockk = "1.14.2"
+coroutines-test = "1.10.2"
+turbine = "1.2.0"
 
 # AndroidX
 coreKtx = "1.16.0"
@@ -89,6 +93,11 @@ androidx-runner = { group = "androidx.test", name = "runner", version.ref = "run
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -123,4 +132,12 @@ ktor = [
     "ktor-client-core",
     "ktor-logging",
     "ktor-serialization-kotlinx-json"
+]
+
+test = [
+    "kotest-runner-junit5",
+    "kotest-assertions-core",
+    "mockk",
+    "kotlinx-coroutines-test",
+    "turbine"
 ]
