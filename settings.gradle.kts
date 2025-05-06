@@ -21,7 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "GithubUserClient"
 include(":app")
+include(":data")
 include(":design")
 include(":domain")
 include(":feature-userlist")
 include(":feature-userdetail")
+include(":model")
+include(":api")
