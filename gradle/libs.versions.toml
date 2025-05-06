@@ -6,6 +6,7 @@ mockk = "1.14.2"
 coroutines-test = "1.10.2"
 orgJacocoCore = "0.8.13"
 turbine = "1.2.0"
+compose-bom = "2025.04.01"
 
 # AndroidX
 coreKtx = "1.16.0"
@@ -100,6 +101,13 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
 org-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "orgJacocoCore" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
+
+## --- Compose Test ---
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -124,8 +132,11 @@ compose = [
 ]
 
 compose-test = [
-    "androidx-ui-test-junit4",
-    "androidx-ui-test-manifest"
+    "androidx-compose-bom",
+    "androidx-compose-ui-test-junit4",
+    "androidx-compose-ui-test-manifest",
+    "koin-test",
+    "koin-test-junit4"
 ]
 
 ktor = [

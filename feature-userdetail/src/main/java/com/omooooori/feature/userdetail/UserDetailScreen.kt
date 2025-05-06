@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.omooooori.design.component.material3.AppScaffold
 import com.omooooori.design.component.material3.AppText
@@ -30,14 +31,18 @@ import com.omooooori.model.GithubUserEvent
 fun UserDetailScreen(uiState: UserDetailUiState) {
     AppScaffold(
         topBar = {
-            AppTopBar(title = "GitHub User Detail")
+            AppTopBar(
+                title = "GitHub User Detail",
+                modifier = Modifier.testTag("back_button")
+            )
         },
     ) { paddingValues ->
         Box(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
+                    .padding(paddingValues)
+                    .testTag("user_detail_container"),
         ) {
             when (val state = uiState) {
                 is UserDetailUiState.Idle -> {
@@ -45,7 +50,10 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        AppText(text = "ユーザーを選択してください")
+                        AppText(
+                            text = "ユーザーを選択してください",
+                            modifier = Modifier.testTag("idle_message")
+                        )
                     }
                 }
 
@@ -54,7 +62,9 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        CircularProgressIndicator()
+                        CircularProgressIndicator(
+                            modifier = Modifier.testTag("loading_indicator")
+                        )
                     }
                 }
 
@@ -74,6 +84,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         AppText(
                             "エラー: ${state.message}",
                             color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.testTag("error_message")
                         )
                     }
                 }
@@ -92,7 +103,8 @@ fun UserDetailContent(
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .testTag("user_detail_content"),
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -102,23 +114,51 @@ fun UserDetailContent(
                     modifier =
                         Modifier
                             .size(64.dp)
-                            .clip(CircleShape),
+                            .clip(CircleShape)
+                            .testTag("avatar_image"),
                 )
                 Spacer(modifier = Modifier.width(16.dp))
-                AppText(text = user.username, style = MaterialTheme.typography.titleLarge)
+                AppText(
+                    text = user.username,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.testTag("username")
+                )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            AppText("会社: ${user.company ?: "未登録"}")
-            AppText("場所: ${user.location ?: "未登録"}")
-            AppText("リポジトリ数: ${user.publicRepos}")
-            AppText("フォロワー: ${user.followers} / フォロー中: ${user.following}")
+            AppText(
+                text = "会社: ${user.company ?: "未登録"}",
+                modifier = Modifier.testTag("company")
+            )
+            AppText(
+                text = "場所: ${user.location ?: "未登録"}",
+                modifier = Modifier.testTag("location")
+            )
+            AppText(
+                text = "リポジトリ数: ${user.publicRepos}",
+                modifier = Modifier.testTag("public_repos")
+            )
+            AppText(
+                text = "フォロワー: ${user.followers} / フォロー中: ${user.following}",
+                modifier = Modifier.testTag("followers_following")
+            )
             Spacer(modifier = Modifier.height(24.dp))
-            AppText("最近のアクティビティ", style = MaterialTheme.typography.titleMedium)
+            AppText(
+                text = "最近のアクティビティ",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.testTag("activity_title")
+            )
         }
 
         items(events) { event ->
-            Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                AppText("・${event.type} @ ${event.repoName}")
+            Column(
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .testTag("event_list")
+            ) {
+                AppText(
+                    text = "・${event.type} @ ${event.repoName}",
+                    modifier = Modifier.testTag("event_item_${event.id}")
+                )
             }
         }
     }
