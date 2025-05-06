@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.omooooori.githubuserclient"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -40,15 +40,24 @@ android {
 }
 
 dependencies {
+    implementation(project(":api"))
     implementation(project(":design"))
     implementation(project(":domain"))
     implementation(project(":feature-userdetail"))
     implementation(project(":feature-userlist"))
+    implementation(project(":data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.bundles.compose)
+
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.core)
+
+    implementation(libs.bundles.ktor)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
