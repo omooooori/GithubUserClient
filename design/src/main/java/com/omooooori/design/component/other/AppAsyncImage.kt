@@ -21,6 +21,6 @@ fun AppAsyncImage(
         modifier = modifier,
         contentScale = contentScale,
         placeholder = placeholder,
-        error = error
+        error = error,
     )
 }

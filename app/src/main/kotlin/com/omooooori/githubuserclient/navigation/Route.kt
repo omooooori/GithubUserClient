@@ -2,9 +2,10 @@ package com.omooooori.githubuserclient.navigation
 
 import android.net.Uri
 
-sealed class Screen(val route: String) {
-    object UserList : Screen("userList")
-    object UserDetail : Screen("userDetail/{username}/{avatarUrl}") {
+sealed class Route(val route: String) {
+    object UserList : Route("userList")
+
+    object UserDetail : Route("userDetail/{username}/{avatarUrl}") {
         fun createRoute(
             username: String,
             avatarUrl: String,

@@ -12,5 +12,5 @@ data class GithubUserDetailResult(
     val location: String? = null,
     @SerialName("public_repos") val publicRepos: Int,
     val followers: Int,
-    val following: Int
+    val following: Int,
 )

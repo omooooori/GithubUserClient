@@ -33,47 +33,50 @@ fun AppTextField(
         singleLine = singleLine,
         isError = isError,
         label = label?.let { { AppText(it) } },
-        placeholder = placeholder?.let {
-            {
-                AppText(it)
-            }
-        },
-        leadingIcon = leadingIcon?.let {
-            {
-                AppIcon(it, null)
-            }
-        },
-        trailingIcon = trailingIcon?.let {
-            {
-                AppIcon(
-                    it,
-                    null,
-                    modifier = Modifier.clickable {
-                        onClickTrailingIcon?.invoke()
-                    }
-                )
-            }
-        },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
-
-            // error case color
-            errorContainerColor = MaterialTheme.colorScheme.errorContainer,
-            errorIndicatorColor = MaterialTheme.colorScheme.error,
-            errorLabelColor = MaterialTheme.colorScheme.error,
-            errorTrailingIconColor = MaterialTheme.colorScheme.error
-        )
-
+        placeholder =
+            placeholder?.let {
+                {
+                    AppText(it)
+                }
+            },
+        leadingIcon =
+            leadingIcon?.let {
+                {
+                    AppIcon(it, null)
+                }
+            },
+        trailingIcon =
+            trailingIcon?.let {
+                {
+                    AppIcon(
+                        it,
+                        null,
+                        modifier =
+                            Modifier.clickable {
+                                onClickTrailingIcon?.invoke()
+                            },
+                    )
+                }
+            },
+        colors =
+            TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+                // error case color
+                errorContainerColor = MaterialTheme.colorScheme.errorContainer,
+                errorIndicatorColor = MaterialTheme.colorScheme.error,
+                errorLabelColor = MaterialTheme.colorScheme.error,
+                errorTrailingIconColor = MaterialTheme.colorScheme.error,
+            ),
     )
 }
 
 @Preview(
     name = "Light Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppTextFieldLightPreview() {
@@ -91,7 +94,7 @@ fun AppTextFieldLightPreview() {
 @Preview(
     name = "Dark Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppTextFieldDarkPreview() {
@@ -106,11 +109,10 @@ fun AppTextFieldDarkPreview() {
     }
 }
 
-
 @Preview(
     name = "Light Theme",
     showBackground = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppTextFieldErrorLightPreview() {
@@ -130,7 +132,7 @@ fun AppTextFieldErrorLightPreview() {
     name = "Dark Theme",
     showBackground = true,
     showSystemUi = true,
-    apiLevel = 33
+    apiLevel = 33,
 )
 @Composable
 fun AppTextFieldErrorDarkPreview() {
@@ -141,7 +143,7 @@ fun AppTextFieldErrorDarkPreview() {
             placeholder = "Placeholder",
             leadingIcon = Icons.Default.Create,
             trailingIcon = Icons.Default.Close,
-            isError = true
+            isError = true,
         )
     }
 }

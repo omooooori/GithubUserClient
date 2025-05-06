@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 data class GithubUserEventResult(
     val id: String,
     val type: String,
-    val repo: Repo
+    val repo: Repo,
 ) {
     @Serializable
     data class Repo(
-        val name: String
+        val name: String,
     )
 }

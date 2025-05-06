@@ -16,7 +16,9 @@ import io.ktor.http.takeFrom
 
 interface GithubUserRepository {
     suspend fun fetchUsers(since: Int = 0): List<GithubUserResult>
+
     suspend fun fetchUserDetail(username: String): GithubUserDetailResult
+
     suspend fun fetchUserEvents(username: String): List<GithubUserEventResult>
 
     companion object {
@@ -32,9 +34,8 @@ interface GithubUserRepository {
 }
 
 class GithubUserApiRepository(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
 ) : GithubUserRepository {
-
     companion object {
         const val TOKEN = BuildConfig.GITHUB_TOKEN
     }
@@ -57,7 +58,7 @@ class GithubUserApiRepository(
                 url.takeFrom(BASE_URL)
                 appendPathSegments(
                     GithubUserRepository.USERS_PATH,
-                    username
+                    username,
                 )
             }
         }.body()
@@ -72,7 +73,7 @@ class GithubUserApiRepository(
                     GithubUserRepository.USERS_PATH,
                     username,
                     GithubUserRepository.USERS_EVENT_EVENTS_PATH,
-                    GithubUserRepository.USERS_EVENT_PUBLIC_PATH
+                    GithubUserRepository.USERS_EVENT_PUBLIC_PATH,
                 )
             }
         }.body()
@@ -82,15 +83,15 @@ class GithubUserApiRepository(
         headers {
             append(
                 HttpHeaders.Authorization,
-                "${GithubUserRepository.HTTP_HEADER_AUTHORIZATION_BEARER} $TOKEN"
+                "${GithubUserRepository.HTTP_HEADER_AUTHORIZATION_BEARER} $TOKEN",
             )
             append(
                 HttpHeaders.Accept,
-                GithubUserRepository.HTTP_HEADER_ACCEPT_VALUE
+                GithubUserRepository.HTTP_HEADER_ACCEPT_VALUE,
             )
             append(
                 GithubUserRepository.HTTP_HEADER_X_GITHUB_API_VERSION_NAME,
-                GithubUserRepository.HTTP_HEADER_X_GITHUB_API_VERSION_VALUE
+                GithubUserRepository.HTTP_HEADER_X_GITHUB_API_VERSION_VALUE,
             )
         }
     }
