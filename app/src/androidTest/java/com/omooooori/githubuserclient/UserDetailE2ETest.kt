@@ -19,32 +19,35 @@ class UserDetailE2ETest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    val testUiState = UserDetailUiState.Success(
-        avatarUrl = "https://example.com/avatar1.jpg",
-        userDetail = GithubUserDetail(
-            id = 1,
-            username = "testUser1",
-            name = "testName",
-            company = "testCompany",
-            location = "Japan",
-            publicRepos = 0,
-            followers = 100,
-            following = 150
-        ),
-        events = listOf(
-            GithubUserEvent(
-                id = "1",
-                type = "type",
-                repoName = "repo1"
-            )
+    val testUiState =
+        UserDetailUiState.Success(
+            avatarUrl = "https://example.com/avatar1.jpg",
+            userDetail =
+                GithubUserDetail(
+                    id = 1,
+                    username = "testUser1",
+                    name = "testName",
+                    company = "testCompany",
+                    location = "Japan",
+                    publicRepos = 0,
+                    followers = 100,
+                    following = 150,
+                ),
+            events =
+                listOf(
+                    GithubUserEvent(
+                        id = "1",
+                        type = "type",
+                        repoName = "repo1",
+                    ),
+                ),
         )
-    )
 
     @Test
     fun testUserDetailDisplay() {
         composeTestRule.setContent {
             UserDetailScreen(
-                uiState = testUiState
+                uiState = testUiState,
             )
         }
 

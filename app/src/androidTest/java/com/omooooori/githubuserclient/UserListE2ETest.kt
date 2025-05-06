@@ -17,27 +17,29 @@ class UserListE2ETest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    val testUiState = UserListUiState.Success(
-        query = "",
-        users = listOf(
-            GithubUser(
-                id = 1,
-                username = "testUser1",
-                avatarUrl = "https://example.com/avatar1.jpg"
-            ),
-            GithubUser(
-                id = 2,
-                username = "testUser2",
-                avatarUrl = "https://example.com/avatar2.jpg"
-            )
+    val testUiState =
+        UserListUiState.Success(
+            query = "",
+            users =
+                listOf(
+                    GithubUser(
+                        id = 1,
+                        username = "testUser1",
+                        avatarUrl = "https://example.com/avatar1.jpg",
+                    ),
+                    GithubUser(
+                        id = 2,
+                        username = "testUser2",
+                        avatarUrl = "https://example.com/avatar2.jpg",
+                    ),
+                ),
         )
-    )
 
     @Test
     fun testUserListDisplay() {
         composeTestRule.setContent {
             UserListScreen(
-                uiState = testUiState
+                uiState = testUiState,
             )
         }
 
@@ -60,4 +62,4 @@ class UserListE2ETest {
         composeTestRule.onNodeWithTag("user_item_1")
             .performClick()
     }
-} 
+}

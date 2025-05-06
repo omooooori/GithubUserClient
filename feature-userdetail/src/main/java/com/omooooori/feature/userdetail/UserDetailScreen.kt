@@ -33,7 +33,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
         topBar = {
             AppTopBar(
                 title = "GitHub User Detail",
-                modifier = Modifier.testTag("back_button")
+                modifier = Modifier.testTag("back_button"),
             )
         },
     ) { paddingValues ->
@@ -52,7 +52,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                     ) {
                         AppText(
                             text = "ユーザーを選択してください",
-                            modifier = Modifier.testTag("idle_message")
+                            modifier = Modifier.testTag("idle_message"),
                         )
                     }
                 }
@@ -63,7 +63,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(
-                            modifier = Modifier.testTag("loading_indicator")
+                            modifier = Modifier.testTag("loading_indicator"),
                         )
                     }
                 }
@@ -84,7 +84,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         AppText(
                             "エラー: ${state.message}",
                             color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.testTag("error_message")
+                            modifier = Modifier.testTag("error_message"),
                         )
                     }
                 }
@@ -121,43 +121,44 @@ fun UserDetailContent(
                 AppText(
                     text = user.username,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.testTag("username")
+                    modifier = Modifier.testTag("username"),
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
             AppText(
                 text = "会社: ${user.company ?: "未登録"}",
-                modifier = Modifier.testTag("company")
+                modifier = Modifier.testTag("company"),
             )
             AppText(
                 text = "場所: ${user.location ?: "未登録"}",
-                modifier = Modifier.testTag("location")
+                modifier = Modifier.testTag("location"),
             )
             AppText(
                 text = "リポジトリ数: ${user.publicRepos}",
-                modifier = Modifier.testTag("public_repos")
+                modifier = Modifier.testTag("public_repos"),
             )
             AppText(
                 text = "フォロワー: ${user.followers} / フォロー中: ${user.following}",
-                modifier = Modifier.testTag("followers_following")
+                modifier = Modifier.testTag("followers_following"),
             )
             Spacer(modifier = Modifier.height(24.dp))
             AppText(
                 text = "最近のアクティビティ",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.testTag("activity_title")
+                modifier = Modifier.testTag("activity_title"),
             )
         }
 
         items(events) { event ->
             Column(
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .testTag("event_list")
+                modifier =
+                    Modifier
+                        .padding(vertical = 8.dp)
+                        .testTag("event_list"),
             ) {
                 AppText(
                     text = "・${event.type} @ ${event.repoName}",
-                    modifier = Modifier.testTag("event_item_${event.id}")
+                    modifier = Modifier.testTag("event_item_${event.id}"),
                 )
             }
         }

@@ -49,18 +49,20 @@ fun UserListScreen(
             when (uiState) {
                 is UserListUiState.Loading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .testTag("loading_indicator"),
+                        modifier =
+                            Modifier
+                                .align(Alignment.Center)
+                                .testTag("loading_indicator"),
                     )
                 }
 
                 is UserListUiState.Error -> {
                     AppText(
                         text = uiState.message,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .testTag("error_message"),
+                        modifier =
+                            Modifier
+                                .align(Alignment.Center)
+                                .testTag("error_message"),
                     )
                 }
 
