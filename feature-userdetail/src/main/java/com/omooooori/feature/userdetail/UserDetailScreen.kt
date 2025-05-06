@@ -40,6 +40,15 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                     .padding(paddingValues),
         ) {
             when (val state = uiState) {
+                is UserDetailUiState.Idle -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        AppText(text = "ユーザーを選択してください")
+                    }
+                }
+
                 is UserDetailUiState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),

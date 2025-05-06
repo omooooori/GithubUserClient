@@ -13,7 +13,7 @@ class UserDetailViewModel(
     private val fetchUserDetailUseCase: FetchUserDetailUseCase,
     private val fetchUserEventsUseCase: FetchUserEventsUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UserDetailUiState>(UserDetailUiState.Loading)
+    private val _uiState = MutableStateFlow<UserDetailUiState>(UserDetailUiState.Idle)
     val uiState: StateFlow<UserDetailUiState> = _uiState
 
     fun load(
