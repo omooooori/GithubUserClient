@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -11,12 +12,13 @@ android {
     compileSdk = 36
 
     buildFeatures.buildConfig = true
-    val localProperties = Properties().apply {
-        val localFile = rootProject.file("local.properties")
-        if (localFile.exists()) {
-            load(localFile.inputStream())
+    val localProperties =
+        Properties().apply {
+            val localFile = rootProject.file("local.properties")
+            if (localFile.exists()) {
+                load(localFile.inputStream())
+            }
         }
-    }
 
     defaultConfig {
         minSdk = 24
@@ -32,7 +34,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
