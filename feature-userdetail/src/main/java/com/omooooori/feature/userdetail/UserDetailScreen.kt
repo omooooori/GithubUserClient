@@ -1,5 +1,6 @@
 package com.omooooori.feature.userdetail
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,11 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.omooooori.design.component.material3.AppErrorDialog
 import com.omooooori.design.component.material3.AppScaffold
 import com.omooooori.design.component.material3.AppText
 import com.omooooori.design.component.material3.AppTopBar
 import com.omooooori.design.component.other.AppAsyncImage
+import com.omooooori.design.theme.GithubUserClientTheme
 import com.omooooori.model.GithubUserDetail
 import com.omooooori.model.GithubUserEvent
 
@@ -77,16 +81,9 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                 }
 
                 is UserDetailUiState.Error -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        AppText(
-                            "エラー: ${state.message}",
-                            color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.testTag("error_message"),
-                        )
-                    }
+                    AppErrorDialog(
+                        message = state.message,
+                    ) {}
                 }
             }
         }
@@ -162,5 +159,109 @@ fun UserDetailContent(
                 )
             }
         }
+    }
+}
+
+private val previewUiState =
+    UserDetailUiState.Success(
+        avatarUrl = "https://avatars.githubusercontent.com/u/583231?v=4",
+        userDetail =
+            GithubUserDetail(
+                id = 1,
+                username = "omooooori",
+                name = "omooooori name",
+                company = "Company Name",
+                location = "Japan",
+                publicRepos = 50,
+                followers = 100,
+                following = 20,
+            ),
+        events = emptyList(),
+    )
+
+@Preview(
+    name = "UserDetailScreen - Light",
+    showBackground = true,
+    apiLevel = 33,
+)
+@Composable
+fun PreviewUserDetailScreenLight() {
+    GithubUserClientTheme(darkTheme = false) {
+        UserDetailScreen(
+            uiState = previewUiState,
+        )
+    }
+}
+
+@Preview(
+    name = "UserDetailScreen - Dark",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    apiLevel = 33,
+)
+@Composable
+fun PreviewUserDetailScreenDark() {
+    GithubUserClientTheme(darkTheme = true) {
+        UserDetailScreen(
+            uiState = previewUiState,
+        )
+    }
+}
+
+@Preview(
+    name = "UserDetailScreen Loading - Light",
+    showBackground = true,
+    apiLevel = 33,
+)
+@Composable
+fun PreviewUserDetailScreenLoadingLight() {
+    GithubUserClientTheme(darkTheme = false) {
+        UserDetailScreen(
+            uiState = UserDetailUiState.Loading,
+        )
+    }
+}
+
+@Preview(
+    name = "UserDetailScreen Loading - Dark",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    apiLevel = 33,
+)
+@Composable
+fun PreviewUserDetailScreenLoadingDark() {
+    GithubUserClientTheme(darkTheme = true) {
+        UserDetailScreen(
+            uiState = UserDetailUiState.Loading,
+        )
+    }
+}
+
+@Preview(
+    name = "UserDetailScreen Error - Light",
+    showBackground = true,
+    apiLevel = 33,
+)
+@Composable
+fun PreviewUserDetailScreenErrorLight() {
+    GithubUserClientTheme(darkTheme = false) {
+        UserDetailScreen(
+            uiState = UserDetailUiState.Error(message = "Failed to load user from Github..."),
+        )
+    }
+}
+
+@Preview(
+    name = "UserDetailScreen Error - Dark",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    apiLevel = 33,
+)
+@Composable
+fun PreviewUserDetailScreenErrorDark() {
+    GithubUserClientTheme(darkTheme = true) {
+        UserDetailScreen(
+            uiState = UserDetailUiState.Error(message = "Failed to load user from Github..."),
+        )
     }
 }

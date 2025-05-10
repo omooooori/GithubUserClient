@@ -76,6 +76,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.bundles.compose.test)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     androidTestImplementation(project(":model"))
     androidTestImplementation(project(":feature-userlist"))
     androidTestImplementation(project(":feature-userdetail"))

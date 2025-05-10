@@ -1,6 +1,7 @@
 package com.omooooori.feature.userdetail
 
 import app.cash.turbine.test
+import com.omooooori.data.GithubApiError
 import com.omooooori.data.GithubUserDetailResult
 import com.omooooori.data.GithubUserEventResult
 import com.omooooori.data.mapper.toModel
@@ -77,7 +78,7 @@ class UserDetailViewModelTest : BehaviorSpec({
                     viewModel.uiState.test {
                         awaitItem() shouldBe UserDetailUiState.Idle
 
-                        viewModel.load(username, avatarUrl)
+                        viewModel.fetchUserDetail(username, avatarUrl)
                         awaitItem() shouldBe UserDetailUiState.Loading
                         awaitItem() shouldBe
                             UserDetailUiState.Success(
@@ -92,7 +93,7 @@ class UserDetailViewModelTest : BehaviorSpec({
         }
 
         When("エラーが発生した場合") {
-            coEvery { fetchUserDetailUseCase.execute(username) } throws Exception("エラーが発生しました")
+            coEvery { fetchUserDetailUseCase.execute(username) } throws GithubApiError.AuthenticationRequired()
 
             Then("エラー状態に遷移すること") {
                 runTest {
@@ -100,9 +101,9 @@ class UserDetailViewModelTest : BehaviorSpec({
                     viewModel.uiState.test {
                         awaitItem() shouldBe UserDetailUiState.Idle
 
-                        viewModel.load(username, avatarUrl)
+                        viewModel.fetchUserDetail(username, avatarUrl)
                         awaitItem() shouldBe UserDetailUiState.Loading
-                        awaitItem() shouldBe UserDetailUiState.Error("ユーザー詳細の取得に失敗しました")
+                        awaitItem() shouldBe UserDetailUiState.Error("Authentication required")
                         cancelAndIgnoreRemainingEvents()
                     }
                 }

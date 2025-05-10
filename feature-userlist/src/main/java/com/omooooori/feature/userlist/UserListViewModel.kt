@@ -2,6 +2,7 @@ package com.omooooori.feature.userlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.omooooori.data.GithubApiError
 import com.omooooori.data.mapper.toModel
 import com.omooooori.domain.FetchUsersUseCase
 import com.omooooori.model.GithubUser
@@ -46,7 +47,12 @@ class UserListViewModel(
 
                 _uiState.value = UserListUiState.Success(query = "", users = loadedUsers.toList())
             } catch (e: Exception) {
-                _uiState.value = UserListUiState.Error(message = e.localizedMessage ?: "エラーが発生しました")
+                val errorMessage =
+                    when (e) {
+                        is GithubApiError -> e.message ?: "予期せぬエラーが発生しました"
+                        else -> "予期せぬエラーが発生しました"
+                    }
+                _uiState.value = UserListUiState.Error(message = errorMessage)
             } finally {
                 isLoadingMore = false
             }

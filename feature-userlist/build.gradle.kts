@@ -36,6 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {

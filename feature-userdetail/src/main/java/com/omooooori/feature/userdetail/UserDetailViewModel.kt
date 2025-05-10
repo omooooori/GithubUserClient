@@ -2,6 +2,7 @@ package com.omooooori.feature.userdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.omooooori.data.GithubApiError
 import com.omooooori.data.mapper.toModel
 import com.omooooori.domain.FetchUserDetailUseCase
 import com.omooooori.domain.FetchUserEventsUseCase
@@ -16,19 +17,16 @@ class UserDetailViewModel(
     private val _uiState = MutableStateFlow<UserDetailUiState>(UserDetailUiState.Idle)
     val uiState: StateFlow<UserDetailUiState> = _uiState
 
-    fun load(
+    fun fetchUserDetail(
         username: String,
         avatarUrl: String,
     ) {
+        _uiState.value = UserDetailUiState.Loading
+
         viewModelScope.launch {
-            _uiState.value = UserDetailUiState.Loading
             try {
-                val userDetailDto = fetchUserDetailUseCase.execute(username)
-                val eventsDto = fetchUserEventsUseCase.execute(username)
-
-                val userDetail = userDetailDto.toModel()
-                val events = eventsDto.map { it.toModel() }
-
+                val userDetail = fetchUserDetailUseCase.execute(username).toModel()
+                val events = fetchUserEventsUseCase.execute(username).map { it.toModel() }
                 _uiState.value =
                     UserDetailUiState.Success(
                         avatarUrl = avatarUrl,
@@ -36,7 +34,12 @@ class UserDetailViewModel(
                         events = events,
                     )
             } catch (e: Exception) {
-                _uiState.value = UserDetailUiState.Error("ユーザー詳細の取得に失敗しました")
+                val errorMessage =
+                    when (e) {
+                        is GithubApiError -> e.message ?: "予期せぬエラーが発生しました"
+                        else -> "予期せぬエラーが発生しました"
+                    }
+                _uiState.value = UserDetailUiState.Error(message = errorMessage)
             }
         }
     }

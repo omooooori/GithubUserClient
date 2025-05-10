@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.omooooori.design.component.material3.AppErrorDialog
 import com.omooooori.design.component.material3.AppScaffold
-import com.omooooori.design.component.material3.AppText
 import com.omooooori.design.component.material3.AppTopBar
 import com.omooooori.design.theme.GithubUserClientTheme
 import com.omooooori.design.ui.SearchInputBar
@@ -57,13 +57,9 @@ fun UserListScreen(
                 }
 
                 is UserListUiState.Error -> {
-                    AppText(
-                        text = uiState.message,
-                        modifier =
-                            Modifier
-                                .align(Alignment.Center)
-                                .testTag("error_message"),
-                    )
+                    AppErrorDialog(
+                        message = uiState.message,
+                    ) {}
                 }
 
                 is UserListUiState.Success -> {

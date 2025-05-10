@@ -59,7 +59,7 @@ fun AppNavigation(
                 val userDetailViewModel: UserDetailViewModel = koinViewModel()
                 val uiState by userDetailViewModel.uiState.collectAsState()
                 LaunchedEffect(Unit) {
-                    userDetailViewModel.load(username, avatarUrl)
+                    userDetailViewModel.fetchUserDetail(username, avatarUrl)
                 }
                 UserDetailScreen(uiState = uiState)
             }
