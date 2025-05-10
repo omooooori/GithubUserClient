@@ -5,15 +5,19 @@ A Android application that allows users to search and view GitHub user profiles 
 ## Screenshots
 
 ### User List Screen
-![User List Screen Light Mode](docs/capture/user_list_screen_light_mode.png)
-![User List Screen Dark Mode](docs/capture/user_list_screen_dark_mode.png)
+<div style="display: flex; gap: 16px;">
+  <img src="docs/capture/user_list_screen_light_mode.png" width="300" alt="User List Screen Light Mode">
+  <img src="docs/capture/user_list_screen_dark_mode.png" width="300" alt="User List Screen Dark Mode">
+</div>
 
 ### User Detail Screen
-![User Detail Screen Light Mode](docs/capture/user_detail_screen_light_mode.png)
-![User Detail Screen Dark Mode](docs/capture/user_detail_screen_dark_mode.png)
+<div style="display: flex; gap: 16px;">
+  <img src="docs/capture/user_detail_screen_light_mode.png" width="300" alt="User Detail Screen Light Mode">
+  <img src="docs/capture/user_detail_screen_dark_mode.png" width="300" alt="User Detail Screen Dark Mode">
+</div>
 
 ### Foldable Layout
-![Foldable Layout](docs/capture/foldable_layout.png)
+<img src="docs/capture/foldable_layout.png" width="300" alt="Foldable Layout">
 
 ## Project Structure
 
