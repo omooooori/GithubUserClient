@@ -1,6 +1,7 @@
 package com.omooooori.feature.userlist
 
 import app.cash.turbine.test
+import com.omooooori.data.GithubApiError
 import com.omooooori.data.GithubUserResult
 import com.omooooori.data.mapper.toModel
 import com.omooooori.domain.FetchUsersUseCase
@@ -63,14 +64,14 @@ class UserListViewModelTest : BehaviorSpec({
         }
 
         When("エラーが発生した場合") {
-            coEvery { fetchUsersUseCase.execute() } throws Exception("エラーが発生しました")
+            coEvery { fetchUsersUseCase.execute() } throws GithubApiError.AuthenticationRequired()
 
             Then("エラー状態に遷移すること") {
                 runTest {
                     val viewModel = UserListViewModel(fetchUsersUseCase)
                     viewModel.uiState.test {
                         awaitItem() shouldBe UserListUiState.Loading
-                        awaitItem() shouldBe UserListUiState.Error("エラーが発生しました")
+                        awaitItem() shouldBe UserListUiState.Error("Authentication required")
                         cancelAndIgnoreRemainingEvents()
                     }
                 }
