@@ -144,14 +144,6 @@ fun UserDetailContent(
 
             AppText(
                 text = stringResource(
-                    R.string.user_detail_location,
-                    user.location ?: notRegistered
-                ),
-                modifier = Modifier.testTag("location"),
-            )
-
-            AppText(
-                text = stringResource(
                     R.string.user_detail_repositories,
                     user.publicRepos
                 ),

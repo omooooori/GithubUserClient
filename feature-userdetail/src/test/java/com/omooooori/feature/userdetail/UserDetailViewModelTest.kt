@@ -7,9 +7,11 @@ import com.omooooori.data.GithubUserEventResult
 import com.omooooori.data.mapper.toModel
 import com.omooooori.domain.FetchUserDetailUseCase
 import com.omooooori.domain.FetchUserEventsUseCase
+import com.omooooori.string.ExceptionMessageProvider
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,6 +25,7 @@ class UserDetailViewModelTest : BehaviorSpec({
     val testDispatcher = StandardTestDispatcher()
     val fetchUserDetailUseCase: FetchUserDetailUseCase = mockk()
     val fetchUserEventsUseCase: FetchUserEventsUseCase = mockk()
+    val exceptionMessageProvider: ExceptionMessageProvider = mockk()
 
     beforeTest {
         Dispatchers.setMain(testDispatcher)
@@ -74,7 +77,7 @@ class UserDetailViewModelTest : BehaviorSpec({
 
             Then("Should transition from loading to success state") {
                 runTest {
-                    val viewModel = UserDetailViewModel(fetchUserDetailUseCase, fetchUserEventsUseCase)
+                    val viewModel = UserDetailViewModel(fetchUserDetailUseCase, fetchUserEventsUseCase, exceptionMessageProvider)
                     viewModel.uiState.test {
                         awaitItem() shouldBe UserDetailUiState.Idle
 
@@ -93,11 +96,12 @@ class UserDetailViewModelTest : BehaviorSpec({
         }
 
         When("An error occurs") {
-            coEvery { fetchUserDetailUseCase.execute(username) } throws GithubApiError.AuthenticationRequired()
+            coEvery { fetchUserDetailUseCase.execute(username) } throws GithubApiError.AuthenticationRequired
+            every { exceptionMessageProvider.getMessage(any()) } returns "Authentication required"
 
             Then("Should transition to error state") {
                 runTest {
-                    val viewModel = UserDetailViewModel(fetchUserDetailUseCase, fetchUserEventsUseCase)
+                    val viewModel = UserDetailViewModel(fetchUserDetailUseCase, fetchUserEventsUseCase, exceptionMessageProvider)
                     viewModel.uiState.test {
                         awaitItem() shouldBe UserDetailUiState.Idle
 
