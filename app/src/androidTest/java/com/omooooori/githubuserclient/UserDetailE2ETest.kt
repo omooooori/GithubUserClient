@@ -51,40 +51,40 @@ class UserDetailE2ETest {
             )
         }
 
-        // ユーザー詳細情報が表示されることを確認
+        // Verify that user detail information is displayed
         composeTestRule.onNodeWithTag("user_detail_container")
             .assertIsDisplayed()
 
-        // ユーザー名が表示されることを確認
+        // Verify that the username is displayed
         composeTestRule.onNodeWithTag("username")
             .assertIsDisplayed()
             .assertTextEquals("testUser1")
 
-        // 会社名が表示されることを確認
+        // Verify that the company name is displayed
         composeTestRule.onNodeWithTag("company")
             .assertIsDisplayed()
-            .assertTextEquals("会社: testCompany")
+            .assertTextEquals("Company: testCompany")
 
-        // 場所が表示されることを確認
+        // Verify that the location is displayed
         composeTestRule.onNodeWithTag("location")
             .assertIsDisplayed()
-            .assertTextEquals("場所: Japan")
+            .assertTextEquals("Location: Japan")
 
-        // リポジトリ数が表示されることを確認
+        // Verify that the number of repositories is displayed
         composeTestRule.onNodeWithTag("public_repos")
             .assertIsDisplayed()
-            .assertTextEquals("リポジトリ数: 0")
+            .assertTextEquals("Repositories: 0")
 
-        // フォロワー/フォロー数が表示されることを確認
+        // Verify that the number of followers/following is displayed
         composeTestRule.onNodeWithTag("followers_following")
             .assertIsDisplayed()
-            .assertTextEquals("フォロワー: 100 / フォロー中: 150")
+            .assertTextEquals("Followers: 100 / Following: 150")
 
-        // イベントリストが表示されることを確認
+        // Verify that the event list is displayed
         composeTestRule.onNodeWithTag("event_list")
             .assertIsDisplayed()
 
-        // イベントの詳細が表示されることを確認
+        // Verify that the event details are displayed
         composeTestRule.onNodeWithTag("event_item_1")
             .assertIsDisplayed()
             .assertTextEquals("・type @ repo1")

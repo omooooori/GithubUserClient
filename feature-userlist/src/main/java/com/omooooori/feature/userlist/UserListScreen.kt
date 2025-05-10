@@ -95,7 +95,7 @@ fun UserListScreenContent(
 
                 is LoadState.Error -> {
                     AppErrorDialog(
-                        message = "予期せぬエラーが発生しました",
+                        message = "An unexpected error occurred",
                     ) {}
                 }
 
@@ -127,7 +127,7 @@ fun UserListScreenContent(
 
                             is LoadState.Error ->
                                 item {
-                                    AppText("追加の読み込みに失敗しました")
+                                    AppText("Failed to load more items")
                                 }
 
                             else -> {}

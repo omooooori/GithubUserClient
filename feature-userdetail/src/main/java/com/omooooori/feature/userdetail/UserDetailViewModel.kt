@@ -36,8 +36,8 @@ class UserDetailViewModel(
             } catch (e: Exception) {
                 val errorMessage =
                     when (e) {
-                        is GithubApiError -> e.message ?: "予期せぬエラーが発生しました"
-                        else -> "予期せぬエラーが発生しました"
+                        is GithubApiError -> e.message ?: "An unexpected error occurred"
+                        else -> "An unexpected error occurred"
                     }
                 _uiState.value = UserDetailUiState.Error(message = errorMessage)
             }

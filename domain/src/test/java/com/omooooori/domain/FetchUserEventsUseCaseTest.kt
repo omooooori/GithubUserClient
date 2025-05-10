@@ -12,7 +12,7 @@ class FetchUserEventsUseCaseTest : BehaviorSpec({
     val repository: GithubUserRepository = mockk()
     val useCase = FetchUserEventsUseCase(repository)
 
-    Given("特定のユーザーのイベント一覧を取得する") {
+    Given("Fetch events for a specific user") {
         val username = "testuser"
         val expectedEvents =
             listOf(
@@ -34,10 +34,10 @@ class FetchUserEventsUseCaseTest : BehaviorSpec({
                 ),
             )
 
-        When("リポジトリが正常にイベント一覧を返す場合") {
+        When("Repository returns events successfully") {
             coEvery { repository.fetchUserEvents(username) } returns expectedEvents
 
-            Then("イベント一覧が正しく返されること") {
+            Then("Events should be returned correctly") {
                 runTest {
                     val result = useCase.execute(username)
                     result shouldBe expectedEvents
@@ -45,10 +45,10 @@ class FetchUserEventsUseCaseTest : BehaviorSpec({
             }
         }
 
-        When("リポジトリが空のリストを返す場合") {
+        When("Repository returns an empty list") {
             coEvery { repository.fetchUserEvents(username) } returns emptyList()
 
-            Then("空のリストが返されること") {
+            Then("Empty list should be returned") {
                 runTest {
                     val result = useCase.execute(username)
                     result shouldBe emptyList()

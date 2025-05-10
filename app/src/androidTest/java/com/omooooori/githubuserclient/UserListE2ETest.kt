@@ -67,7 +67,7 @@ class UserListE2ETest {
             UserListTestHost()
         }
 
-        // 表示待機（確実にレイアウトが完了してからチェック）
+        // Wait for display (ensure layout is complete before checking)
         composeTestRule.waitUntil(timeoutMillis = 5000) {
             composeTestRule.onAllNodesWithTag("user_item_0").fetchSemanticsNodes().isNotEmpty()
         }

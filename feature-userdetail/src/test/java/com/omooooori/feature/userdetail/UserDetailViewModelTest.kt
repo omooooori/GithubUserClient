@@ -32,11 +32,11 @@ class UserDetailViewModelTest : BehaviorSpec({
         Dispatchers.resetMain()
     }
 
-    Given("ユーザー詳細画面のViewModel") {
+    Given("UserDetailScreen ViewModel") {
         val username = "testuser"
         val avatarUrl = "https://example.com/avatar"
 
-        When("ユーザー詳細の読み込みを開始した場合") {
+        When("Start loading user details") {
             val expectedUserDetail =
                 GithubUserDetailResult(
                     id = 1,
@@ -72,7 +72,7 @@ class UserDetailViewModelTest : BehaviorSpec({
             coEvery { fetchUserDetailUseCase.execute(username) } returns expectedUserDetail
             coEvery { fetchUserEventsUseCase.execute(username) } returns expectedEvents
 
-            Then("ローディング状態から成功状態に遷移すること") {
+            Then("Should transition from loading to success state") {
                 runTest {
                     val viewModel = UserDetailViewModel(fetchUserDetailUseCase, fetchUserEventsUseCase)
                     viewModel.uiState.test {
@@ -92,10 +92,10 @@ class UserDetailViewModelTest : BehaviorSpec({
             }
         }
 
-        When("エラーが発生した場合") {
+        When("An error occurs") {
             coEvery { fetchUserDetailUseCase.execute(username) } throws GithubApiError.AuthenticationRequired()
 
-            Then("エラー状態に遷移すること") {
+            Then("Should transition to error state") {
                 runTest {
                     val viewModel = UserDetailViewModel(fetchUserDetailUseCase, fetchUserEventsUseCase)
                     viewModel.uiState.test {

@@ -55,7 +55,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         contentAlignment = Alignment.Center,
                     ) {
                         AppText(
-                            text = "ユーザーを選択してください",
+                            text = "Please select a user",
                             modifier = Modifier.testTag("idle_message"),
                         )
                     }
@@ -123,24 +123,24 @@ fun UserDetailContent(
             }
             Spacer(modifier = Modifier.height(16.dp))
             AppText(
-                text = "会社: ${user.company ?: "未登録"}",
+                text = "Company: ${user.company ?: "Not registered"}",
                 modifier = Modifier.testTag("company"),
             )
             AppText(
-                text = "場所: ${user.location ?: "未登録"}",
+                text = "Location: ${user.location ?: "Not registered"}",
                 modifier = Modifier.testTag("location"),
             )
             AppText(
-                text = "リポジトリ数: ${user.publicRepos}",
+                text = "Repositories: ${user.publicRepos}",
                 modifier = Modifier.testTag("public_repos"),
             )
             AppText(
-                text = "フォロワー: ${user.followers} / フォロー中: ${user.following}",
+                text = "Followers: ${user.followers} / Following: ${user.following}",
                 modifier = Modifier.testTag("followers_following"),
             )
             Spacer(modifier = Modifier.height(24.dp))
             AppText(
-                text = "最近のアクティビティ",
+                text = "Recent Activity",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.testTag("activity_title"),
             )

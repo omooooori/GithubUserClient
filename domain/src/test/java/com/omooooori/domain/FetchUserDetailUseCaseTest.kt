@@ -12,7 +12,7 @@ class FetchUserDetailUseCaseTest : BehaviorSpec({
     val repository: GithubUserRepository = mockk()
     val useCase = FetchUserDetailUseCase(repository)
 
-    Given("特定のユーザーの詳細情報を取得する") {
+    Given("Fetch user details for a specific user") {
         val username = "testuser"
         val expectedUserDetail =
             GithubUserDetailResult(
@@ -26,10 +26,10 @@ class FetchUserDetailUseCaseTest : BehaviorSpec({
                 following = 50,
             )
 
-        When("リポジトリが正常にユーザー詳細を返す場合") {
+        When("Repository returns user details successfully") {
             coEvery { repository.fetchUserDetail(username) } returns expectedUserDetail
 
-            Then("ユーザー詳細が正しく返されること") {
+            Then("User details should be returned correctly") {
                 runTest {
                     val result = useCase.execute(username)
                     result shouldBe expectedUserDetail
