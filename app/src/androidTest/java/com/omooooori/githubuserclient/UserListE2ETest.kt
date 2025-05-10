@@ -11,8 +11,8 @@ import com.omooooori.model.GithubUser
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
-@RunWith(AndroidJUnit4::class)
 class UserListE2ETest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -54,12 +54,23 @@ class UserListE2ETest {
 
     @Test
     fun testUserItemClick() {
+        var clickedUsername: String? = null
+        var clickedAvatarUrl: String? = null
+
         composeTestRule.setContent {
-            UserListScreen(uiState = testUiState)
+            UserListScreen(
+                uiState = testUiState,
+                onUserClick = { username, avatarUrl ->
+                    clickedUsername = username
+                    clickedAvatarUrl = avatarUrl
+                }
+            )
         }
 
-        // ユーザー項目をクリック
         composeTestRule.onNodeWithTag("user_item_1")
             .performClick()
+
+        assertEquals("testUser1", clickedUsername)
+        assertEquals("https://example.com/avatar1.jpg", clickedAvatarUrl)
     }
 }
