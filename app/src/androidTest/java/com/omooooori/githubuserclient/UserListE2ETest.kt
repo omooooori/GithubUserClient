@@ -4,13 +4,11 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.omooooori.feature.userlist.UserListScreen
 import com.omooooori.feature.userlist.UserListUiState
 import com.omooooori.model.GithubUser
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
 class UserListE2ETest {
@@ -63,7 +61,7 @@ class UserListE2ETest {
                 onUserClick = { username, avatarUrl ->
                     clickedUsername = username
                     clickedAvatarUrl = avatarUrl
-                }
+                },
             )
         }
 

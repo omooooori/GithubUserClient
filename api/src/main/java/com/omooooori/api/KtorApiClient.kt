@@ -49,18 +49,21 @@ object KtorApiClient {
 
             install(Logging) {
                 level = LogLevel.ALL
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        println("AppDebug KtorHttpClient message:$message")
+                logger =
+                    object : Logger {
+                        override fun log(message: String) {
+                            println("AppDebug KtorHttpClient message:$message")
+                        }
                     }
-                }
             }
 
             install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                })
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        isLenient = true
+                    },
+                )
             }
         }
 }

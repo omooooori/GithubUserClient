@@ -47,10 +47,11 @@ class UserListViewModel(
 
                 _uiState.value = UserListUiState.Success(query = "", users = loadedUsers.toList())
             } catch (e: Exception) {
-                val errorMessage = when (e) {
-                    is GithubApiError -> e.message ?: "予期せぬエラーが発生しました"
-                    else -> "予期せぬエラーが発生しました"
-                }
+                val errorMessage =
+                    when (e) {
+                        is GithubApiError -> e.message ?: "予期せぬエラーが発生しました"
+                        else -> "予期せぬエラーが発生しました"
+                    }
                 _uiState.value = UserListUiState.Error(message = errorMessage)
             } finally {
                 isLoadingMore = false

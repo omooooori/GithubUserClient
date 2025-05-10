@@ -22,7 +22,7 @@ fun AppErrorDialog(
                 text = "OK",
                 onClick = onDismiss,
             )
-        }
+        },
     )
 }
 
@@ -36,7 +36,7 @@ fun AppErrorDialogLightPreview() {
     GithubUserClientTheme(darkTheme = false) {
         AppErrorDialog(
             message = "This ui should be used for showing information or error to users in common.",
-            onDismiss = {}
+            onDismiss = {},
         )
     }
 }
@@ -51,7 +51,7 @@ fun AppErrorDialogDarkPreview() {
     GithubUserClientTheme(darkTheme = true) {
         AppErrorDialog(
             message = "This ui should be used for showing information or error to users in common.",
-            onDismiss = {}
+            onDismiss = {},
         )
     }
 }

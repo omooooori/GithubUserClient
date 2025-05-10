@@ -23,12 +23,13 @@ fun AppButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContainerColor = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.5f),
-            disabledContentColor = MaterialTheme.colorScheme.inverseOnSurface.copy(alpha = 0.5f),
-        ),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContainerColor = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.5f),
+                disabledContentColor = MaterialTheme.colorScheme.inverseOnSurface.copy(alpha = 0.5f),
+            ),
     ) {
         AppText(text = text)
     }
@@ -44,14 +45,15 @@ fun AppButtonLightPreview() {
     GithubUserClientTheme(darkTheme = false) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
+            modifier =
+                Modifier
+                    .background(color = MaterialTheme.colorScheme.background),
         ) {
             repeat(2) { index ->
                 AppButton(
                     text = "OK",
                     onClick = {},
-                    enabled = index % 2 == 0
+                    enabled = index % 2 == 0,
                 )
             }
         }
@@ -68,14 +70,15 @@ fun AppButtonDarkPreview() {
     GithubUserClientTheme(darkTheme = true) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
+            modifier =
+                Modifier
+                    .background(color = MaterialTheme.colorScheme.background),
         ) {
             repeat(2) { index ->
                 AppButton(
                     text = "OK",
                     onClick = {},
-                    enabled = index % 2 == 0
+                    enabled = index % 2 == 0,
                 )
             }
         }

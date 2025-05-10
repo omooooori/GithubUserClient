@@ -58,7 +58,7 @@ fun UserListScreen(
 
                 is UserListUiState.Error -> {
                     AppErrorDialog(
-                        message = uiState.message
+                        message = uiState.message,
                     ) {}
                 }
 

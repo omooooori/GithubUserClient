@@ -82,7 +82,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
 
                 is UserDetailUiState.Error -> {
                     AppErrorDialog(
-                        message = state.message
+                        message = state.message,
                     ) {}
                 }
             }
@@ -165,16 +165,17 @@ fun UserDetailContent(
 private val previewUiState =
     UserDetailUiState.Success(
         avatarUrl = "https://avatars.githubusercontent.com/u/583231?v=4",
-        userDetail = GithubUserDetail(
-            id = 1,
-            username = "omooooori",
-            name = "omooooori name",
-            company = "Company Name",
-            location = "Japan",
-            publicRepos = 50,
-            followers = 100,
-            following = 20
-        ),
+        userDetail =
+            GithubUserDetail(
+                id = 1,
+                username = "omooooori",
+                name = "omooooori name",
+                company = "Company Name",
+                location = "Japan",
+                publicRepos = 50,
+                followers = 100,
+                following = 20,
+            ),
         events = emptyList(),
     )
 
@@ -187,7 +188,7 @@ private val previewUiState =
 fun PreviewUserDetailScreenLight() {
     GithubUserClientTheme(darkTheme = false) {
         UserDetailScreen(
-            uiState = previewUiState
+            uiState = previewUiState,
         )
     }
 }
@@ -202,7 +203,7 @@ fun PreviewUserDetailScreenLight() {
 fun PreviewUserDetailScreenDark() {
     GithubUserClientTheme(darkTheme = true) {
         UserDetailScreen(
-            uiState = previewUiState
+            uiState = previewUiState,
         )
     }
 }
@@ -216,7 +217,7 @@ fun PreviewUserDetailScreenDark() {
 fun PreviewUserDetailScreenLoadingLight() {
     GithubUserClientTheme(darkTheme = false) {
         UserDetailScreen(
-            uiState = UserDetailUiState.Loading
+            uiState = UserDetailUiState.Loading,
         )
     }
 }
@@ -231,7 +232,7 @@ fun PreviewUserDetailScreenLoadingLight() {
 fun PreviewUserDetailScreenLoadingDark() {
     GithubUserClientTheme(darkTheme = true) {
         UserDetailScreen(
-            uiState = UserDetailUiState.Loading
+            uiState = UserDetailUiState.Loading,
         )
     }
 }
@@ -245,7 +246,7 @@ fun PreviewUserDetailScreenLoadingDark() {
 fun PreviewUserDetailScreenErrorLight() {
     GithubUserClientTheme(darkTheme = false) {
         UserDetailScreen(
-            uiState = UserDetailUiState.Error(message = "Failed to load user from Github...")
+            uiState = UserDetailUiState.Error(message = "Failed to load user from Github..."),
         )
     }
 }
@@ -260,7 +261,7 @@ fun PreviewUserDetailScreenErrorLight() {
 fun PreviewUserDetailScreenErrorDark() {
     GithubUserClientTheme(darkTheme = true) {
         UserDetailScreen(
-            uiState = UserDetailUiState.Error(message = "Failed to load user from Github...")
+            uiState = UserDetailUiState.Error(message = "Failed to load user from Github..."),
         )
     }
 }
