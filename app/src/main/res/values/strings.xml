@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GithubUserClient</string>
+
+    <!-- error message -->
+    <string name="error_message_authorization_required">Authentication required</string>
+    <string name="error_message_forbidden">Access forbidden</string>
+    <string name="error_message_not_found">Resource not found</string>
+    <string name="error_message_rate_limit_exceeded">API rate limit exceeded</string>
+    <string name="error_message_server_error">Server error occurred</string>
+    <string name="error_message_unknown">An unexpected error occurred</string>
 </resources>

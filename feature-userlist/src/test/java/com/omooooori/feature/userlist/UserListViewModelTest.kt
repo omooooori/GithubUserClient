@@ -29,8 +29,8 @@ class UserListViewModelTest : BehaviorSpec({
         Dispatchers.resetMain()
     }
 
-    Given("ユーザー一覧画面のViewModel") {
-        When("初期化時") {
+    Given("UserListScreen ViewModel") {
+        When("On initialization") {
             val expectedUsers =
                 listOf(
                     GithubUserResult(
@@ -47,7 +47,7 @@ class UserListViewModelTest : BehaviorSpec({
 
             coEvery { fetchUsersUseCase.execute(any()) } returns expectedUsers
 
-            Then("uiStateが即Successになること") {
+            Then("uiState should immediately become Success") {
                 runTest(testDispatcher) {
                     val viewModel = UserListViewModel(fetchUsersUseCase)
 
@@ -58,7 +58,7 @@ class UserListViewModelTest : BehaviorSpec({
                 }
             }
 
-            Then("usersFlowがPagingDataをemitすること") {
+            Then("usersFlow should emit PagingData") {
                 runTest(testDispatcher) {
                     val viewModel = UserListViewModel(fetchUsersUseCase)
 
@@ -71,10 +71,10 @@ class UserListViewModelTest : BehaviorSpec({
             }
         }
 
-        When("クエリを更新した場合") {
+        When("Query is updated") {
             coEvery { fetchUsersUseCase.execute(any()) } returns emptyList()
 
-            Then("query Flowが更新されること") {
+            Then("query Flow should be updated") {
                 runTest(testDispatcher) {
                     val viewModel = UserListViewModel(fetchUsersUseCase)
 

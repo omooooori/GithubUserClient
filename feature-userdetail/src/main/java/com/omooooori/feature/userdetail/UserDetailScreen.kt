@@ -1,12 +1,12 @@
 package com.omooooori.feature.userdetail
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omooooori.design.component.material3.AppErrorDialog
@@ -36,7 +37,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
     AppScaffold(
         topBar = {
             AppTopBar(
-                title = "GitHub User Detail",
+                title = stringResource(R.string.user_detail_screen_title),
                 modifier = Modifier.testTag("back_button"),
             )
         },
@@ -55,7 +56,7 @@ fun UserDetailScreen(uiState: UserDetailUiState) {
                         contentAlignment = Alignment.Center,
                     ) {
                         AppText(
-                            text = "ユーザーを選択してください",
+                            text = stringResource(R.string.user_detail_user_not_selected_message),
                             modifier = Modifier.testTag("idle_message"),
                         )
                     }
@@ -96,7 +97,9 @@ fun UserDetailContent(
     user: GithubUserDetail,
     events: List<GithubUserEvent>,
 ) {
+    val notRegistered = stringResource(R.string.user_detail_not_registered)
     LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier =
             Modifier
                 .fillMaxSize()
@@ -121,26 +124,46 @@ fun UserDetailContent(
                     modifier = Modifier.testTag("username"),
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+
             AppText(
-                text = "会社: ${user.company ?: "未登録"}",
+                text =
+                    stringResource(
+                        R.string.user_detail_company,
+                        user.company ?: notRegistered,
+                    ),
                 modifier = Modifier.testTag("company"),
             )
+
             AppText(
-                text = "場所: ${user.location ?: "未登録"}",
+                text =
+                    stringResource(
+                        R.string.user_detail_location,
+                        user.location ?: notRegistered,
+                    ),
                 modifier = Modifier.testTag("location"),
             )
+
             AppText(
-                text = "リポジトリ数: ${user.publicRepos}",
+                text =
+                    stringResource(
+                        R.string.user_detail_repositories,
+                        user.publicRepos,
+                    ),
                 modifier = Modifier.testTag("public_repos"),
             )
+
             AppText(
-                text = "フォロワー: ${user.followers} / フォロー中: ${user.following}",
+                text =
+                    stringResource(
+                        R.string.user_detail_followers_following,
+                        user.followers,
+                        user.following,
+                    ),
                 modifier = Modifier.testTag("followers_following"),
             )
-            Spacer(modifier = Modifier.height(24.dp))
+
             AppText(
-                text = "最近のアクティビティ",
+                text = stringResource(R.string.user_detail_recent_activity),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.testTag("activity_title"),
             )
@@ -154,7 +177,12 @@ fun UserDetailContent(
                         .testTag("event_list"),
             ) {
                 AppText(
-                    text = "・${event.type} @ ${event.repoName}",
+                    text =
+                        stringResource(
+                            id = R.string.user_detail_event_item,
+                            event.type,
+                            event.repoName,
+                        ),
                     modifier = Modifier.testTag("event_item_${event.id}"),
                 )
             }

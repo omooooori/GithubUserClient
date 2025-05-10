@@ -37,12 +37,12 @@ object KtorApiClient {
                     when (statusCode) {
                         HttpStatusCode.OK.value -> Unit
                         HttpStatusCode.NotModified.value -> Unit
-                        HttpStatusCode.Unauthorized.value -> throw GithubApiError.AuthenticationRequired()
-                        HttpStatusCode.Forbidden.value -> throw GithubApiError.Forbidden()
-                        HttpStatusCode.NotFound.value -> throw GithubApiError.NotFound()
-                        HttpStatusCode.TooManyRequests.value -> throw GithubApiError.RateLimitExceeded()
-                        in 500..599 -> throw GithubApiError.ServerError()
-                        else -> throw GithubApiError.Unknown()
+                        HttpStatusCode.Unauthorized.value -> throw GithubApiError.AuthenticationRequired
+                        HttpStatusCode.Forbidden.value -> throw GithubApiError.Forbidden
+                        HttpStatusCode.NotFound.value -> throw GithubApiError.NotFound
+                        HttpStatusCode.TooManyRequests.value -> throw GithubApiError.RateLimitExceeded
+                        in 500..599 -> throw GithubApiError.ServerError
+                        else -> throw GithubApiError.Unknown
                     }
                 }
             }

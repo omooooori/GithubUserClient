@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -65,7 +66,7 @@ fun UserListScreenContent(
 
     AppScaffold(
         topBar = {
-            AppTopBar(title = "GitHub User List App")
+            AppTopBar(title = stringResource(R.string.user_list_screen_title))
         },
     ) { paddingValues ->
         Column(
@@ -78,7 +79,7 @@ fun UserListScreenContent(
             SearchInputBar(
                 query = query,
                 onQueryChange = onQueryChange,
-                placeholder = "Search GitHub users...",
+                placeholder = stringResource(R.string.user_list_search_box_placeholder),
             )
 
             when (loadState) {
@@ -95,7 +96,7 @@ fun UserListScreenContent(
 
                 is LoadState.Error -> {
                     AppErrorDialog(
-                        message = "予期せぬエラーが発生しました",
+                        message = stringResource(R.string.user_list_pager_error_message),
                     ) {}
                 }
 
@@ -127,7 +128,7 @@ fun UserListScreenContent(
 
                             is LoadState.Error ->
                                 item {
-                                    AppText("追加の読み込みに失敗しました")
+                                    AppText(stringResource(R.string.user_list_load_more_item_error_message))
                                 }
 
                             else -> {}

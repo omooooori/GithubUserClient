@@ -13,7 +13,7 @@ class FetchUsersUseCaseTest : BehaviorSpec({
     val useCase = FetchUsersUseCase(repository)
     val pageCount = 20
 
-    Given("ユーザー一覧を取得する") {
+    Given("Fetch list of users") {
         val expectedUsers =
             listOf(
                 GithubUserResult(
@@ -28,10 +28,10 @@ class FetchUsersUseCaseTest : BehaviorSpec({
                 ),
             )
 
-        When("リポジトリが正常にユーザー一覧を返す場合") {
+        When("Repository returns user list successfully") {
             coEvery { repository.fetchUsers(pageCount) } returns expectedUsers
 
-            Then("ユーザー一覧が正しく返されること") {
+            Then("User list should be returned correctly") {
                 runTest {
                     val result = useCase.execute(pageCount)
                     result shouldBe expectedUsers
@@ -39,10 +39,10 @@ class FetchUsersUseCaseTest : BehaviorSpec({
             }
         }
 
-        When("リポジトリが空のリストを返す場合") {
+        When("Repository returns an empty list") {
             coEvery { repository.fetchUsers(pageCount) } returns emptyList()
 
-            Then("空のリストが返されること") {
+            Then("Empty list should be returned") {
                 runTest {
                     val result = useCase.execute(pageCount)
                     result shouldBe emptyList()

@@ -1,27 +1,16 @@
 package com.omooooori.data
 
+@Suppress("JavaIoSerializableObjectMustHaveReadResolve")
 sealed class GithubApiError : Exception() {
-    data class AuthenticationRequired(
-        override val message: String = "Authentication required",
-    ) : GithubApiError()
+    object AuthenticationRequired : GithubApiError()
 
-    data class Forbidden(
-        override val message: String = "Access forbidden",
-    ) : GithubApiError()
+    object Forbidden : GithubApiError()
 
-    data class NotFound(
-        override val message: String = "Resource not found",
-    ) : GithubApiError()
+    object NotFound : GithubApiError()
 
-    data class RateLimitExceeded(
-        override val message: String = "API rate limit exceeded",
-    ) : GithubApiError()
+    object RateLimitExceeded : GithubApiError()
 
-    data class ServerError(
-        override val message: String = "Server error occurred",
-    ) : GithubApiError()
+    object ServerError : GithubApiError()
 
-    data class Unknown(
-        override val message: String = "An unexpected error occurred",
-    ) : GithubApiError()
+    object Unknown : GithubApiError()
 }
