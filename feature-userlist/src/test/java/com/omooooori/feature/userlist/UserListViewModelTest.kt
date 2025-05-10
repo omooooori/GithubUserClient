@@ -1,12 +1,11 @@
 package com.omooooori.feature.userlist
 
 import app.cash.turbine.test
-import com.omooooori.data.GithubApiError
 import com.omooooori.data.GithubUserResult
-import com.omooooori.data.mapper.toModel
 import com.omooooori.domain.FetchUsersUseCase
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +17,7 @@ import kotlinx.coroutines.test.setMain
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UserListViewModelTest : BehaviorSpec({
+
     val testDispatcher = StandardTestDispatcher()
     val fetchUsersUseCase: FetchUsersUseCase = mockk()
 
@@ -45,53 +45,43 @@ class UserListViewModelTest : BehaviorSpec({
                     ),
                 )
 
-            coEvery { fetchUsersUseCase.execute() } returns expectedUsers
+            coEvery { fetchUsersUseCase.execute(any()) } returns expectedUsers
 
-            Then("ローディング状態から成功状態に遷移すること") {
-                runTest {
+            Then("uiStateが即Successになること") {
+                runTest(testDispatcher) {
                     val viewModel = UserListViewModel(fetchUsersUseCase)
+
                     viewModel.uiState.test {
-                        awaitItem() shouldBe UserListUiState.Loading
-                        awaitItem() shouldBe
-                            UserListUiState.Success(
-                                query = "",
-                                users = expectedUsers.map { it.toModel() },
-                            )
+                        awaitItem() shouldBe UserListUiState.Success
+                        cancelAndIgnoreRemainingEvents()
+                    }
+                }
+            }
+
+            Then("usersFlowがPagingDataをemitすること") {
+                runTest(testDispatcher) {
+                    val viewModel = UserListViewModel(fetchUsersUseCase)
+
+                    viewModel.usersFlow.test {
+                        val pagingData = awaitItem()
+                        pagingData shouldNotBe null
                         cancelAndIgnoreRemainingEvents()
                     }
                 }
             }
         }
 
-        When("エラーが発生した場合") {
-            coEvery { fetchUsersUseCase.execute() } throws GithubApiError.AuthenticationRequired()
+        When("クエリを更新した場合") {
+            coEvery { fetchUsersUseCase.execute(any()) } returns emptyList()
 
-            Then("エラー状態に遷移すること") {
-                runTest {
+            Then("query Flowが更新されること") {
+                runTest(testDispatcher) {
                     val viewModel = UserListViewModel(fetchUsersUseCase)
-                    viewModel.uiState.test {
-                        awaitItem() shouldBe UserListUiState.Loading
-                        awaitItem() shouldBe UserListUiState.Error("Authentication required")
-                        cancelAndIgnoreRemainingEvents()
-                    }
-                }
-            }
-        }
 
-        When("検索クエリが更新された場合") {
-            val query = "test"
-            coEvery { fetchUsersUseCase.execute() } returns emptyList()
-
-            Then("UIStateのqueryが更新されること") {
-                runTest {
-                    val viewModel = UserListViewModel(fetchUsersUseCase)
-                    viewModel.uiState.test {
-                        awaitItem() shouldBe UserListUiState.Loading
-                        awaitItem() shouldBe UserListUiState.Success(query = "", users = emptyList())
-
-                        viewModel.updateQuery(query)
-                        awaitItem() shouldBe UserListUiState.Success(query = query, users = emptyList())
-
+                    viewModel.query.test {
+                        awaitItem() shouldBe ""
+                        viewModel.updateQuery("test")
+                        awaitItem() shouldBe "test"
                         cancelAndIgnoreRemainingEvents()
                     }
                 }

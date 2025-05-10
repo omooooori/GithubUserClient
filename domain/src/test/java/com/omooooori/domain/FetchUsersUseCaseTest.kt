@@ -11,6 +11,7 @@ import kotlinx.coroutines.test.runTest
 class FetchUsersUseCaseTest : BehaviorSpec({
     val repository: GithubUserRepository = mockk()
     val useCase = FetchUsersUseCase(repository)
+    val pageCount = 20
 
     Given("ユーザー一覧を取得する") {
         val expectedUsers =
@@ -28,22 +29,22 @@ class FetchUsersUseCaseTest : BehaviorSpec({
             )
 
         When("リポジトリが正常にユーザー一覧を返す場合") {
-            coEvery { repository.fetchUsers() } returns expectedUsers
+            coEvery { repository.fetchUsers(pageCount) } returns expectedUsers
 
             Then("ユーザー一覧が正しく返されること") {
                 runTest {
-                    val result = useCase.execute()
+                    val result = useCase.execute(pageCount)
                     result shouldBe expectedUsers
                 }
             }
         }
 
         When("リポジトリが空のリストを返す場合") {
-            coEvery { repository.fetchUsers() } returns emptyList()
+            coEvery { repository.fetchUsers(pageCount) } returns emptyList()
 
             Then("空のリストが返されること") {
                 runTest {
-                    val result = useCase.execute()
+                    val result = useCase.execute(pageCount)
                     result shouldBe emptyList()
                 }
             }
