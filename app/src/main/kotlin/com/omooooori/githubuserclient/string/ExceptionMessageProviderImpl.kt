@@ -5,9 +5,8 @@ import com.omooooori.data.GithubApiError
 import com.omooooori.string.ExceptionMessageProvider
 
 class ExceptionMessageProviderImpl(
-    private val context: Context
+    private val context: Context,
 ) : ExceptionMessageProvider {
-
     override fun getMessage(exception: GithubApiError): String {
         return when (exception) {
             is GithubApiError.AuthenticationRequired -> TODO()

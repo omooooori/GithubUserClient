@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -127,35 +126,39 @@ fun UserDetailContent(
             }
 
             AppText(
-                text = stringResource(
-                    R.string.user_detail_company,
-                    user.company ?: notRegistered
-                ),
+                text =
+                    stringResource(
+                        R.string.user_detail_company,
+                        user.company ?: notRegistered,
+                    ),
                 modifier = Modifier.testTag("company"),
             )
 
             AppText(
-                text = stringResource(
-                    R.string.user_detail_location,
-                    user.location ?: notRegistered
-                ),
+                text =
+                    stringResource(
+                        R.string.user_detail_location,
+                        user.location ?: notRegistered,
+                    ),
                 modifier = Modifier.testTag("location"),
             )
 
             AppText(
-                text = stringResource(
-                    R.string.user_detail_repositories,
-                    user.publicRepos
-                ),
+                text =
+                    stringResource(
+                        R.string.user_detail_repositories,
+                        user.publicRepos,
+                    ),
                 modifier = Modifier.testTag("public_repos"),
             )
 
             AppText(
-                text = stringResource(
-                    R.string.user_detail_followers_following,
-                    user.followers,
-                    user.following
-                ),
+                text =
+                    stringResource(
+                        R.string.user_detail_followers_following,
+                        user.followers,
+                        user.following,
+                    ),
                 modifier = Modifier.testTag("followers_following"),
             )
 
@@ -168,16 +171,18 @@ fun UserDetailContent(
 
         items(events) { event ->
             Column(
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .testTag("event_list"),
+                modifier =
+                    Modifier
+                        .padding(vertical = 8.dp)
+                        .testTag("event_list"),
             ) {
                 AppText(
-                    text = stringResource(
-                        id = R.string.user_detail_event_item,
-                        event.type,
-                        event.repoName
-                    ),
+                    text =
+                        stringResource(
+                            id = R.string.user_detail_event_item,
+                            event.type,
+                            event.repoName,
+                        ),
                     modifier = Modifier.testTag("event_item_${event.id}"),
                 )
             }
