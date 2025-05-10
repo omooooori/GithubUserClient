@@ -2,10 +2,10 @@ package com.omooooori.feature.userlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omooooori.data.GithubApiError
-import com.omooooori.data.mapper.toModel
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.omooooori.domain.FetchUsersUseCase
-import com.omooooori.model.GithubUser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,53 +14,22 @@ import kotlinx.coroutines.launch
 class UserListViewModel(
     private val fetchUsersUseCase: FetchUsersUseCase,
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow<UserListUiState>(UserListUiState.Loading)
     val uiState: StateFlow<UserListUiState> = _uiState
 
-    private var isLoadingMore = false
-    private var since: Int = 0
-    private val loadedUsers = mutableListOf<GithubUser>()
-
     init {
-        fetchUsers(initial = true)
-    }
-
-    private fun fetchUsers(initial: Boolean = false) {
-        if (isLoadingMore) return
-        isLoadingMore = true
-
         viewModelScope.launch {
-            if (initial) {
-                _uiState.value = UserListUiState.Loading
-                loadedUsers.clear()
-                since = 0
-            }
-
-            try {
-                val usersDto = fetchUsersUseCase.execute()
-                val users = usersDto.map { it.toModel() }
-
-                if (users.isNotEmpty()) {
-                    since = users.last().id
-                    loadedUsers += users
-                }
-
-                _uiState.value = UserListUiState.Success(query = "", users = loadedUsers.toList())
-            } catch (e: Exception) {
-                val errorMessage =
-                    when (e) {
-                        is GithubApiError -> e.message ?: "予期せぬエラーが発生しました"
-                        else -> "予期せぬエラーが発生しました"
-                    }
-                _uiState.value = UserListUiState.Error(message = errorMessage)
-            } finally {
-                isLoadingMore = false
-            }
+            _uiState.value = UserListUiState.Success(
+                query = "",
+                users = Pager(
+                    config = PagingConfig(pageSize = 20),
+                    pagingSourceFactory = {
+                        GithubUserPagingSource(fetchUsersUseCase)
+                    },
+                ).flow.cachedIn(viewModelScope)
+            )
         }
-    }
-
-    fun loadMore() {
-        fetchUsers()
     }
 
     fun updateQuery(query: String) {

@@ -19,6 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.omooooori.design.component.material3.AppErrorDialog
 import com.omooooori.design.component.material3.AppScaffold
 import com.omooooori.design.component.material3.AppTopBar
@@ -26,14 +34,28 @@ import com.omooooori.design.theme.GithubUserClientTheme
 import com.omooooori.design.ui.SearchInputBar
 import com.omooooori.design.ui.SearchListCell
 import com.omooooori.model.GithubUser
+import kotlinx.coroutines.flow.Flow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun UserListScreen(
-    uiState: UserListUiState,
+    viewModel: UserListViewModel = koinViewModel(),
     onUserClick: (String, String) -> Unit = { _, _ -> },
 ) {
-    var query by remember { mutableStateOf("") }
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    UserListScreenContent(
+        uiState = uiState,
+        onQueryChange = { viewModel.updateQuery(it) },
+        onUserClick = onUserClick,
+    )
+}
 
+@Composable
+fun UserListScreenContent(
+    uiState: UserListUiState,
+    onQueryChange: (String) -> Unit = {},
+    onUserClick: (String, String) -> Unit = { _, _ -> },
+) {
     AppScaffold(
         topBar = {
             AppTopBar(title = "GitHub User List App")
@@ -63,33 +85,28 @@ fun UserListScreen(
                 }
 
                 is UserListUiState.Success -> {
+                    val users = uiState.users.collectAsLazyPagingItems()
                     Column {
                         SearchInputBar(
-                            query = query,
-                            onQueryChange = { query = it },
+                            query = uiState.query,
+                            onQueryChange = { onQueryChange(it) },
                             placeholder = "Search GitHub users...",
                             modifier = Modifier.testTag("search_bar"),
                         )
 
-                        val filtered =
-                            uiState.users.filter {
-                                it.username.contains(query, ignoreCase = true)
-                            }
-
                         LazyColumn(
                             contentPadding = PaddingValues(vertical = 4.dp),
-                            modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .testTag("user_list"),
+                            modifier = Modifier.fillMaxSize(),
                         ) {
-                            items(filtered, key = { it.id }) { user ->
-                                SearchListCell(
-                                    username = user.username,
-                                    avatarUrl = user.avatarUrl,
-                                    onClick = { onUserClick(user.username, user.avatarUrl) },
-                                    modifier = Modifier.testTag("user_item_${user.id}"),
-                                )
+                            items(users.itemCount) { index ->
+                                val user = users[index]
+                                user?.let {
+                                    SearchListCell(
+                                        username = it.username,
+                                        avatarUrl = it.avatarUrl,
+                                        onClick = { onUserClick(it.username, it.avatarUrl) },
+                                    )
+                                }
                             }
                         }
                     }
@@ -99,118 +116,98 @@ fun UserListScreen(
     }
 }
 
-private val previewUiState =
-    UserListUiState.Success(
-        query = "",
-        users =
-            listOf(
-                GithubUser(
-                    id = 1,
-                    username = "omooooori",
-                    avatarUrl = "https://avatars.githubusercontent.com/u/583231?v=4",
-                ),
-                GithubUser(
-                    id = 2,
-                    username = "omooooori2",
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1024025?v=4",
-                ),
-                GithubUser(
-                    id = 3,
-                    username = "omooooori3",
-                    avatarUrl = "https://avatars.githubusercontent.com/u/66577?v=4",
-                ),
-            ),
-    )
-
-@Preview(
-    name = "UserListScreen - Light",
-    showBackground = true,
-    apiLevel = 33,
-)
 @Composable
-fun PreviewUserListScreenLight() {
+fun rememberFakeLazyPagingItems(users: List<GithubUser>): Flow<PagingData<GithubUser>> {
+    val pagingSource = object : PagingSource<Int, GithubUser>() {
+        override fun getRefreshKey(state: PagingState<Int, GithubUser>): Int? = null
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubUser> {
+            return LoadResult.Page(users, prevKey = null, nextKey = null)
+        }
+    }
+    val pager = Pager(PagingConfig(10)) { pagingSource }
+    return pager.flow
+}
+
+val previewUsersList = listOf(
+    GithubUser(1, "omooooori", "https://avatars.githubusercontent.com/u/583231?v=4"),
+    GithubUser(2, "omooooori2", "https://avatars.githubusercontent.com/u/1024025?v=4"),
+    GithubUser(3, "omooooori3", "https://avatars.githubusercontent.com/u/66577?v=4")
+)
+
+@Preview(name = "UserListScreen - Success Light", showBackground = true)
+@Composable
+fun PreviewUserListScreenSuccessLight() {
     GithubUserClientTheme(darkTheme = false) {
-        UserListScreen(
-            uiState = previewUiState,
-            onUserClick = { _, _ -> },
+        UserListScreenContent(
+            uiState = UserListUiState.Success(
+                users = rememberFakeLazyPagingItems(previewUsersList)
+            ),
         )
     }
 }
 
-@Preview(
-    name = "UserListScreen - Dark",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    apiLevel = 33,
-)
+@Preview(name = "UserListScreen - Success Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewUserListScreenDark() {
+fun PreviewUserListScreenSuccessDark() {
+    val users = rememberFakeLazyPagingItems(previewUsersList)
     GithubUserClientTheme(darkTheme = true) {
-        UserListScreen(
-            uiState = previewUiState,
-            onUserClick = { _, _ -> },
+        UserListScreenContent(
+            uiState = UserListUiState.Success(
+                users = rememberFakeLazyPagingItems(previewUsersList)
+            ),
         )
     }
 }
 
-@Preview(
-    name = "UserListScreen Loading - Light",
-    showBackground = true,
-    apiLevel = 33,
-)
+
+@Preview(name = "UserListScreen - Loading Light", showBackground = true)
 @Composable
 fun PreviewUserListScreenLoadingLight() {
+    val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = false) {
-        UserListScreen(
-            uiState = UserListUiState.Loading,
-            onUserClick = { _, _ -> },
+        UserListScreenContent(
+            uiState = UserListUiState.Success(
+                users = rememberFakeLazyPagingItems(previewUsersList)
+            ),
         )
     }
 }
 
-@Preview(
-    name = "UserListScreen Loading - Dark",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    apiLevel = 33,
-)
+@Preview(name = "UserListScreen - Loading Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewUserListScreenLoadingDark() {
+    val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = true) {
-        UserListScreen(
-            uiState = UserListUiState.Loading,
-            onUserClick = { _, _ -> },
+        UserListScreenContent(
+            uiState = UserListUiState.Success(
+                users = rememberFakeLazyPagingItems(previewUsersList)
+            ),
         )
     }
 }
 
-@Preview(
-    name = "UserListScreen Error - Light",
-    showBackground = true,
-    apiLevel = 33,
-)
+@Preview(name = "UserListScreen - Error Light", showBackground = true)
 @Composable
 fun PreviewUserListScreenErrorLight() {
+    val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = false) {
-        UserListScreen(
-            uiState = UserListUiState.Error(message = "Failed to load user from Github..."),
-            onUserClick = { _, _ -> },
+        UserListScreenContent(
+            uiState = UserListUiState.Success(
+                users = rememberFakeLazyPagingItems(previewUsersList)
+            ),
         )
     }
 }
 
-@Preview(
-    name = "UserListScreen Error - Dark",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    apiLevel = 33,
-)
+@Preview(name = "UserListScreen - Error Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewUserListScreenErrorDark() {
+    val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = true) {
-        UserListScreen(
-            uiState = UserListUiState.Error(message = "Failed to load user from Github..."),
-            onUserClick = { _, _ -> },
+        UserListScreenContent(
+            uiState = UserListUiState.Success(
+                users = rememberFakeLazyPagingItems(previewUsersList)
+            ),
         )
     }
 }

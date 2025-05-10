@@ -15,7 +15,6 @@ import androidx.navigation.compose.rememberNavController
 import com.omooooori.feature.userdetail.UserDetailScreen
 import com.omooooori.feature.userdetail.UserDetailViewModel
 import com.omooooori.feature.userlist.UserListScreen
-import com.omooooori.feature.userlist.UserListViewModel
 import com.omooooori.githubuserclient.layout.TwoPaneLayout
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,10 +37,7 @@ fun AppNavigation(
             popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
         ) {
             composable(Route.UserList.route) {
-                val userListViewModel: UserListViewModel = koinViewModel()
-                val state by userListViewModel.uiState.collectAsState()
                 UserListScreen(
-                    uiState = state,
                     onUserClick = { userId, avatarUrl ->
                         navController.navigate(
                             Route.UserDetail.createRoute(
