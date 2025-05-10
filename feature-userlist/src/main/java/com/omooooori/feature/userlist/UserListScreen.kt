@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +23,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.omooooori.design.component.material3.AppErrorDialog
 import com.omooooori.design.component.material3.AppScaffold
@@ -118,30 +115,34 @@ fun UserListScreenContent(
 
 @Composable
 fun rememberFakeLazyPagingItems(users: List<GithubUser>): Flow<PagingData<GithubUser>> {
-    val pagingSource = object : PagingSource<Int, GithubUser>() {
-        override fun getRefreshKey(state: PagingState<Int, GithubUser>): Int? = null
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubUser> {
-            return LoadResult.Page(users, prevKey = null, nextKey = null)
+    val pagingSource =
+        object : PagingSource<Int, GithubUser>() {
+            override fun getRefreshKey(state: PagingState<Int, GithubUser>): Int? = null
+
+            override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubUser> {
+                return LoadResult.Page(users, prevKey = null, nextKey = null)
+            }
         }
-    }
     val pager = Pager(PagingConfig(10)) { pagingSource }
     return pager.flow
 }
 
-val previewUsersList = listOf(
-    GithubUser(1, "omooooori", "https://avatars.githubusercontent.com/u/583231?v=4"),
-    GithubUser(2, "omooooori2", "https://avatars.githubusercontent.com/u/1024025?v=4"),
-    GithubUser(3, "omooooori3", "https://avatars.githubusercontent.com/u/66577?v=4")
-)
+val previewUsersList =
+    listOf(
+        GithubUser(1, "omooooori", "https://avatars.githubusercontent.com/u/583231?v=4"),
+        GithubUser(2, "omooooori2", "https://avatars.githubusercontent.com/u/1024025?v=4"),
+        GithubUser(3, "omooooori3", "https://avatars.githubusercontent.com/u/66577?v=4"),
+    )
 
 @Preview(name = "UserListScreen - Success Light", showBackground = true)
 @Composable
 fun PreviewUserListScreenSuccessLight() {
     GithubUserClientTheme(darkTheme = false) {
         UserListScreenContent(
-            uiState = UserListUiState.Success(
-                users = rememberFakeLazyPagingItems(previewUsersList)
-            ),
+            uiState =
+                UserListUiState.Success(
+                    users = rememberFakeLazyPagingItems(previewUsersList),
+                ),
         )
     }
 }
@@ -152,13 +153,13 @@ fun PreviewUserListScreenSuccessDark() {
     val users = rememberFakeLazyPagingItems(previewUsersList)
     GithubUserClientTheme(darkTheme = true) {
         UserListScreenContent(
-            uiState = UserListUiState.Success(
-                users = rememberFakeLazyPagingItems(previewUsersList)
-            ),
+            uiState =
+                UserListUiState.Success(
+                    users = rememberFakeLazyPagingItems(previewUsersList),
+                ),
         )
     }
 }
-
 
 @Preview(name = "UserListScreen - Loading Light", showBackground = true)
 @Composable
@@ -166,9 +167,10 @@ fun PreviewUserListScreenLoadingLight() {
     val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = false) {
         UserListScreenContent(
-            uiState = UserListUiState.Success(
-                users = rememberFakeLazyPagingItems(previewUsersList)
-            ),
+            uiState =
+                UserListUiState.Success(
+                    users = rememberFakeLazyPagingItems(previewUsersList),
+                ),
         )
     }
 }
@@ -179,9 +181,10 @@ fun PreviewUserListScreenLoadingDark() {
     val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = true) {
         UserListScreenContent(
-            uiState = UserListUiState.Success(
-                users = rememberFakeLazyPagingItems(previewUsersList)
-            ),
+            uiState =
+                UserListUiState.Success(
+                    users = rememberFakeLazyPagingItems(previewUsersList),
+                ),
         )
     }
 }
@@ -192,9 +195,10 @@ fun PreviewUserListScreenErrorLight() {
     val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = false) {
         UserListScreenContent(
-            uiState = UserListUiState.Success(
-                users = rememberFakeLazyPagingItems(previewUsersList)
-            ),
+            uiState =
+                UserListUiState.Success(
+                    users = rememberFakeLazyPagingItems(previewUsersList),
+                ),
         )
     }
 }
@@ -205,9 +209,10 @@ fun PreviewUserListScreenErrorDark() {
     val users = rememberFakeLazyPagingItems(emptyList())
     GithubUserClientTheme(darkTheme = true) {
         UserListScreenContent(
-            uiState = UserListUiState.Success(
-                users = rememberFakeLazyPagingItems(previewUsersList)
-            ),
+            uiState =
+                UserListUiState.Success(
+                    users = rememberFakeLazyPagingItems(previewUsersList),
+                ),
         )
     }
 }

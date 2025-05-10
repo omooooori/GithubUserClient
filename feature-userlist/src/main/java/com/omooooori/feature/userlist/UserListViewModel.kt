@@ -14,21 +14,22 @@ import kotlinx.coroutines.launch
 class UserListViewModel(
     private val fetchUsersUseCase: FetchUsersUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<UserListUiState>(UserListUiState.Loading)
     val uiState: StateFlow<UserListUiState> = _uiState
 
     init {
         viewModelScope.launch {
-            _uiState.value = UserListUiState.Success(
-                query = "",
-                users = Pager(
-                    config = PagingConfig(pageSize = 20),
-                    pagingSourceFactory = {
-                        GithubUserPagingSource(fetchUsersUseCase)
-                    },
-                ).flow.cachedIn(viewModelScope)
-            )
+            _uiState.value =
+                UserListUiState.Success(
+                    query = "",
+                    users =
+                        Pager(
+                            config = PagingConfig(pageSize = 20),
+                            pagingSourceFactory = {
+                                GithubUserPagingSource(fetchUsersUseCase)
+                            },
+                        ).flow.cachedIn(viewModelScope),
+                )
         }
     }
 

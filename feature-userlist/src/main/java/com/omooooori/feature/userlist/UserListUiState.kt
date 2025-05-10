@@ -9,7 +9,7 @@ sealed interface UserListUiState {
 
     data class Success(
         val query: String = "",
-        val users: Flow<PagingData<GithubUser>>
+        val users: Flow<PagingData<GithubUser>>,
     ) : UserListUiState
 
     data class Error(val message: String) : UserListUiState

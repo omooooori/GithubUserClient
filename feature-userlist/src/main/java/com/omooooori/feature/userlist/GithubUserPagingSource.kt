@@ -9,7 +9,6 @@ import com.omooooori.model.GithubUser
 class GithubUserPagingSource(
     private val fetchUsersUseCase: FetchUsersUseCase,
 ) : PagingSource<Int, GithubUser>() {
-
     override fun getRefreshKey(state: PagingState<Int, GithubUser>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
