@@ -1,0 +1,33 @@
+@startuml
+!theme plain
+skinparam sequenceMessageAlign center
+
+actor User
+participant "UserListScreen" as ULS
+participant "UserListViewModel" as ULV
+participant "FetchUsersUseCase" as FUC
+participant "GithubRepository" as GR
+participant "GithubApi" as GA
+
+User -> ULS: Search for users
+activate ULS
+ULS -> ULV: updateQuery(query)
+activate ULV
+ULV -> FUC: execute(query)
+activate FUC
+FUC -> GR: getUsers(query)
+activate GR
+GR -> GA: GET /search/users
+activate GA
+GA --> GR: Response
+deactivate GA
+GR --> FUC: List<GithubUser>
+deactivate GR
+FUC --> ULV: List<GithubUser>
+deactivate FUC
+ULV --> ULS: Update UI
+deactivate ULV
+ULS --> User: Display results
+deactivate ULS
+
+@enduml 

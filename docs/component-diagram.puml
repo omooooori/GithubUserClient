@@ -1,0 +1,71 @@
+@startuml
+!theme plain
+skinparam componentStyle rectangle
+
+package "App" {
+  [MainActivity] as main
+  [Navigation] as nav
+}
+
+package "Features" {
+  [UserListScreen] as userList
+  [UserDetailScreen] as userDetail
+}
+
+package "Domain" {
+  [FetchUsersUseCase] as fetchUsers
+  [FetchUserDetailUseCase] as fetchUserDetail
+  [FetchUserEventsUseCase] as fetchUserEvents
+}
+
+package "Data" {
+  [GithubRepository] as repo
+  [GithubApi] as api
+}
+
+package "Model" {
+  [GithubUser] as user
+  [GithubUserDetail] as userDetail
+  [GithubUserEvent] as event
+}
+
+package "Design" {
+  [AppScaffold] as scaffold
+  [AppTopBar] as topBar
+  [AppText] as text
+  [AppErrorDialog] as error
+  [SearchInputBar] as search
+  [SearchListCell] as cell
+}
+
+main --> nav
+nav --> userList
+nav --> userDetail
+
+userList --> fetchUsers
+userDetail --> fetchUserDetail
+userDetail --> fetchUserEvents
+
+fetchUsers --> repo
+fetchUserDetail --> repo
+fetchUserEvents --> repo
+
+repo --> api
+
+userList --> user
+userDetail --> userDetail
+userDetail --> event
+
+userList --> scaffold
+userList --> topBar
+userList --> text
+userList --> error
+userList --> search
+userList --> cell
+
+userDetail --> scaffold
+userDetail --> topBar
+userDetail --> text
+userDetail --> error
+
+@enduml 
