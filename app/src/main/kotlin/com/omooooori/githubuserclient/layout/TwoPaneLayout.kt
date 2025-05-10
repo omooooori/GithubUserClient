@@ -26,7 +26,7 @@ fun TwoPaneLayout() {
             UserListScreen(
                 uiState = state,
                 onUserClick = { username, avatarUrl ->
-                    userDetailViewModel.load(username, avatarUrl)
+                    userDetailViewModel.fetchUserDetail(username, avatarUrl)
                 },
             )
         }
