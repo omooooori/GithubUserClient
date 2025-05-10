@@ -17,7 +17,7 @@ A Android application that allows users to search and view GitHub user profiles 
 </div>
 
 ### Foldable Layout
-<img src="docs/capture/foldable_layout.png" width="300" alt="Foldable Layout">
+<img src="docs/capture/foldable_layout.png" width="600" alt="Foldable Layout">
 
 ## Project Structure
 
