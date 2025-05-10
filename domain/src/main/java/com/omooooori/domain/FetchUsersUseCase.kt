@@ -6,5 +6,7 @@ import com.omooooori.data.GithubUserResult
 class FetchUsersUseCase(
     private val repository: GithubUserRepository,
 ) {
-    suspend fun execute(): List<GithubUserResult> = repository.fetchUsers()
+    suspend fun execute(
+        since: Int,
+    ): List<GithubUserResult> = repository.fetchUsers(since)
 }
