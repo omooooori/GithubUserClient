@@ -8,6 +8,9 @@ import com.omooooori.domain.FetchUserEventsUseCase
 import com.omooooori.domain.FetchUsersUseCase
 import com.omooooori.feature.userdetail.UserDetailViewModel
 import com.omooooori.feature.userlist.UserListViewModel
+import com.omooooori.githubuserclient.string.ExceptionMessageProviderImpl
+import com.omooooori.string.ExceptionMessageProvider
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,5 +25,9 @@ val appModule =
         single { FetchUserEventsUseCase(get()) }
 
         viewModel { UserListViewModel(get()) }
-        viewModel { UserDetailViewModel(get(), get()) }
+        viewModel { UserDetailViewModel(get(), get(), get()) }
+
+        single<ExceptionMessageProvider> {
+            ExceptionMessageProviderImpl(androidContext())
+        }
     }
