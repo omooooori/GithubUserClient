@@ -40,5 +40,17 @@ gradlePlugin {
             id = "githubapp.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidApplicationCompose") {
+            id = "githubapp.android.application.compose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = "githubapp.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("jacoco") {
+            id = "githubapp.jacoco"
+            implementationClass = "JacocoConventionPlugin"
+        }
     }
 }

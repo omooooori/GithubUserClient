@@ -88,6 +88,7 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 # Plugins defined by this project
 githubapp-android-application = { id = "githubapp.android.application" }
 githubapp-android-library = { id = "githubapp.android.library" }
+githubapp-jacoco = { id = "githubapp.jacoco" }
 
 [bundles]
 compose = [
