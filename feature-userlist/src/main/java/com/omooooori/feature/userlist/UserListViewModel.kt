@@ -8,10 +8,15 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.omooooori.domain.FetchUsersUseCase
 import com.omooooori.model.GithubUser
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 
 class UserListViewModel(
     private val fetchUsersUseCase: FetchUsersUseCase,
@@ -22,13 +27,22 @@ class UserListViewModel(
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
 
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val usersFlow: Flow<PagingData<GithubUser>> =
-        Pager(
-            config = PagingConfig(pageSize = PAGE_COUNT),
-            pagingSourceFactory = {
-                GithubUserPagingSource(fetchUsersUseCase)
-            },
-        ).flow
+        query
+            .debounce(300)
+            .distinctUntilChanged()
+            .flatMapLatest { query ->
+                Pager(
+                    config = PagingConfig(pageSize = GithubUserPagingSource.PAGE_SIZE),
+                    pagingSourceFactory = {
+                        GithubUserPagingSource(
+                            fetchUsersUseCase,
+                            query,
+                        )
+                    },
+                ).flow
+            }
             .cachedIn(viewModelScope)
 
     init {
@@ -37,9 +51,5 @@ class UserListViewModel(
 
     fun updateQuery(newQuery: String) {
         _query.value = newQuery
-    }
-
-    companion object {
-        private const val PAGE_COUNT = 20
     }
 }
