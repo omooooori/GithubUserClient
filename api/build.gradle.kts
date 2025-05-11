@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.omooooori.api"
-    compileSdk = 36
+    compileSdk = project.property("compileSdk").toString().toInt()
 
     buildFeatures.buildConfig = true
     val localProperties =
@@ -21,7 +21,7 @@ android {
         }
 
     defaultConfig {
-        minSdk = 24
+        minSdk = project.property("minSdk").toString().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

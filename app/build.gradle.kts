@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace = "com.omooooori.githubuserclient"
-    compileSdk = 36
+    compileSdk = project.property("compileSdk").toString().toInt()
 
     defaultConfig {
         applicationId = "com.omooooori.githubuserclient"
-        minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = project.property("minSdk").toString().toInt()
+        targetSdk = project.property("targetSdk").toString().toInt()
+        versionCode = project.property("versionCode").toString().toInt()
+        versionName = project.property("versionName").toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
