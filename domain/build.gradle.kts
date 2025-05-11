@@ -1,40 +1,12 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.githubapp.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
 }
 
 android {
-    namespace = "com.omooooori.domain"
-    compileSdk = project.property("compileSdk").toString().toInt()
+    namespace = "com.omooooori.feature.domain"
 
-    defaultConfig {
-        minSdk = project.property("minSdk").toString().toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        debug {
-            enableUnitTestCoverage = true
-            enableAndroidTestCoverage = true
-        }
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
     }

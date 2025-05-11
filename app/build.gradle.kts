@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.githubapp.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ktlint)
@@ -7,38 +7,7 @@ plugins {
 
 android {
     namespace = "com.omooooori.githubuserclient"
-    compileSdk = project.property("compileSdk").toString().toInt()
 
-    defaultConfig {
-        applicationId = "com.omooooori.githubuserclient"
-        minSdk = project.property("minSdk").toString().toInt()
-        targetSdk = project.property("targetSdk").toString().toInt()
-        versionCode = project.property("versionCode").toString().toInt()
-        versionName = project.property("versionName").toString()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        debug {
-            enableUnitTestCoverage = true
-            enableAndroidTestCoverage = true
-        }
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         compose = true
     }

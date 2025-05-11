@@ -1,15 +1,13 @@
-import com.android.build.gradle.internal.tasks.AarMetadataReader.Companion.load
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.githubapp.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
 }
 
 android {
     namespace = "com.omooooori.api"
-    compileSdk = project.property("compileSdk").toString().toInt()
 
     buildFeatures.buildConfig = true
     val localProperties =
@@ -21,29 +19,7 @@ android {
         }
 
     defaultConfig {
-        minSdk = project.property("minSdk").toString().toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
         buildConfigField("String", "GITHUB_TOKEN", "\"${localProperties["GITHUB_TOKEN"]}\"")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
 
